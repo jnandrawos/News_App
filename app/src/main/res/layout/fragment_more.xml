@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.MoreFragment"
+    android:layout_margin="@dimen/til_margin"
+    >
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civProfile"
+        android:layout_width="@dimen/image_size"
+        android:layout_height="@dimen/image_size"
+        android:layout_centerInParent="true"
+        android:src="@drawable/profile_image_placeholder"
+        app:civ_border_color="@color/colorPrimary"
+        app:civ_border_width="@dimen/image_radius"
+
+        app:layout_constraintBottom_toTopOf="@+id/tvEditProfile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvEditProfile"
+        android:layout_width="@dimen/more_option_width"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/more_option_background"
+        android:drawableEnd="@drawable/ic_arrow_forward"
+        android:padding="@dimen/more_option_padding"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="@dimen/more_text_size"
+        android:text="@string/edit_profile"
+        android:textColor="@color/colorPrimaryDark"
+        />
+
+    <TextView
+        android:id="@+id/tvChangePassword"
+        android:layout_width="@dimen/more_option_width"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/more_option_background"
+        android:drawableEnd="@drawable/ic_arrow_forward"
+        android:padding="@dimen/more_option_padding"
+        app:layout_constraintTop_toBottomOf="@id/tvEditProfile"
+        app:layout_constraintBottom_toTopOf="@id/tvAboutUs"
+        android:textSize="@dimen/more_text_size"
+        android:text="@string/change_password"
+        android:textColor="@color/colorPrimaryDark"
+        />
+
+
+    <TextView
+        android:id="@+id/tvAboutUs"
+        android:layout_width="@dimen/more_option_width"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/more_option_background"
+        android:drawableEnd="@drawable/ic_arrow_forward"
+        android:padding="@dimen/more_option_padding"
+        app:layout_constraintBottom_toTopOf="@+id/logout_button"
+        app:layout_constraintTop_toBottomOf="@id/tvChangePassword"
+        android:textSize="@dimen/more_text_size"
+        android:text="@string/about_us"
+        android:textColor="@color/colorPrimaryDark"
+        />
+
+    <Button
+        android:id="@+id/logout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/til_margin"
+        android:backgroundTint="@color/colorPrimary"
+        android:padding="@dimen/button_padding"
+        android:text="@string/logout"
+        android:textSize="@dimen/button_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAboutUs" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

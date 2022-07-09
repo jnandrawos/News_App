@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="input_text_size">16sp</dimen>
+    <dimen name="til_margin">10dp</dimen>
+    <dimen name="button_text_size">20sp</dimen>
+    <dimen name="button_padding">12dp</dimen>
+    <dimen name="display_text_size">18sp</dimen>
+    <dimen name="image_radius">6dp</dimen>
+    <dimen name="image_size">250dp</dimen>
+    <dimen name="more_text_size">22sp</dimen>
+    <dimen name="title_margin_top">20dp</dimen>
+    <dimen name="title_text_size">40sp</dimen>
+    <dimen name="more_option_background_stroke_width">5dp</dimen>
+    <dimen name="more_option_background_corner_radius">20dp</dimen>
+    <dimen name="more_option_padding">15dp</dimen>
+    <dimen name="more_option_width">300dp</dimen>
+    <dimen name="news_margin">5dp</dimen>
+    <dimen name="description_margin">6dp</dimen>
+    <dimen name="details_margin">5dp</dimen>
+    <dimen name="news_padding">16dp</dimen>
+    <dimen name="arrow_size">24dp</dimen>
+    <dimen name="article_image_size">125dp</dimen>
+</resources>

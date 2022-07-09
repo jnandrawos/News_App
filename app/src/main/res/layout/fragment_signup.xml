@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.fragments.SignupFragment"
+    >
+
+    <data>
+        <variable
+            name="myViewModel"
+            type="com.example.newsapp.viewmodels.SignupViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilEmailSignUp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/til_margin"
+            app:layout_constraintBottom_toTopOf="@id/tilPasswordSignUp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etEmailSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email_hint"
+                android:inputType="textEmailAddress"
+                android:text="@={myViewModel.inputEmail}"
+                android:textSize="@dimen/input_text_size" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPasswordSignUp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/til_margin"
+            app:layout_constraintBottom_toTopOf="@id/tilConfirmPasswordSignUp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etPasswordSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={myViewModel.inputPassword}"
+                android:hint="@string/password_hint"
+                android:inputType="textPassword"
+                android:textSize="@dimen/input_text_size" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilConfirmPasswordSignUp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/til_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etConfirmPasswordSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={myViewModel.inputConfirmPassword}"
+                android:hint="@string/confirm_password_hint"
+                android:inputType="textPassword"
+                android:textSize="@dimen/input_text_size" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilFullNameSignUp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/til_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tilConfirmPasswordSignUp">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etFullNameSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={myViewModel.inputName}"
+                android:hint="@string/name_hint"
+                android:inputType="text"
+                android:textSize="@dimen/input_text_size" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/signup_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/til_margin"
+            android:backgroundTint="@color/colorPrimary"
+            android:padding="@dimen/button_padding"
+            android:text="@string/signup"
+            android:textSize="@dimen/button_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tilFullNameSignUp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">News App</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email_hint">Enter your email</string>
+    <string name="password_hint">Enter your password</string>
+    <string name="login">LOGIN</string>
+    <string name="signup_message"><u>Don\'t have an account? Sign Up here!</u></string>
+    <string name="confirm_password_hint">Confirm your password</string>
+    <string name="name_hint">Enter your first and last name</string>
+    <string name="signup">SIGNUP</string>
+    <string name="news">News</string>
+    <string name="more">More</string>
+    <string name="fill_fields">Please fill all fields</string>
+    <string name="edit_profile">EDIT PROFILE</string>
+    <string name="change_password">CHANGE PASSWORD</string>
+    <string name="about_us">ABOUT US</string>
+    <string name="logout">LOGOUT</string>
+    <string name="error">Error</string>
+    <string name="nyt_about_us">https://www.nytco.com/company/</string>
+    <string name="email_label">Email</string>
+    <string name="update">UPDATE</string>
+    <string name="invalid_name">Name cannot be empty</string>
+    <string name="update_successful">Update Successful</string>
+    <string name="old_password">Please enter your old password</string>
+    <string name="new_password">Please enter your new password</string>
+    <string name="change_password_title">Change Password</string>
+    <string name="save">SAVE</string>
+    <string name="passwords_not_matching">Passwords are not the matching</string>
+    <string name="wrong_password">Old password is incorrect</string>
+    <string name="choose_period">Choose period:</string>
+    <string name="fetching_error">Fetching error</string>
+    <string name="article_key">articleKey</string>
+    <string name="error_tag">Error</string>
+    <string name="no_entries">There are no entries, check your connection</string>
+    <string name="database_name">user_details_database</string>
+    <string name="bitmap_error">Could not save bitmap</string>
+    <string name="user_not_existing">User doesn\'t exist,please Register!</string>
+    <string name="check_password">Please check your password</string>
+    <string name="wrong_email_format">Email has wrong format</string>
+    <string name="successful_signup">You have signed up successfully!</string>
+    <string name="email_already_registered">Email already registered</string>
+
+    <string-array name="periods">
+    <item>1 day</item>
+    <item>7 days</item>
+    <item>30 days</item>
+</string-array>
+
+</resources>
