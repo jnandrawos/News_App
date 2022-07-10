@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/newsFragment"
-        android:name="com.example.newsapp.ui.fragments.NewsFragment"
+        android:name="com.example.newsapp.home.presentation.iu.fragments.NewsFragment"
         android:label="@string/news"
         tools:layout="@layout/fragment_news">
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/moreFragment"
-        android:name="com.example.newsapp.ui.fragments.MoreFragment"
+        android:name="com.example.newsapp.home.presentation.iu.fragments.MoreFragment"
         android:label="@string/more"
         tools:layout="@layout/fragment_more" >
         <action
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/aboutUsFragment"
-        android:name="com.example.newsapp.ui.fragments.AboutUsFragment"
+        android:name="com.example.newsapp.home.presentation.iu.fragments.AboutUsFragment"
         tools:layout="@layout/fragment_about_us">
         <action
             android:id="@+id/action_aboutUsFragment_to_moreFragment"
@@ -63,7 +63,7 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.example.newsapp.ui.fragments.EditProfileFragment"
+        android:name="com.example.newsapp.home.presentation.iu.fragments.EditProfileFragment"
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_edit_profile" >
         <action
@@ -78,7 +78,7 @@
     </fragment>
     <fragment
         android:id="@+id/changePasswordFragment"
-        android:name="com.example.newsapp.ui.fragments.ChangePasswordFragment"
+        android:name="com.example.newsapp.home.presentation.iu.fragments.ChangePasswordFragment"
         android:label="ChangePasswordFragment" >
         <action
             android:id="@+id/action_changePasswordFragment_to_moreFragment"
@@ -92,7 +92,7 @@
     </fragment>
     <fragment
         android:id="@+id/articleFragment"
-        android:name="com.example.newsapp.ui.fragments.ArticleFragment"
+        android:name="com.example.newsapp.home.presentation.iu.fragments.ArticleFragment"
         android:label="fragment_article"
         tools:layout="@layout/fragment_article" >
         <action

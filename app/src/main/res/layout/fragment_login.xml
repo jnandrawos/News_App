@@ -3,12 +3,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.fragments.LoginFragment">
+    tools:context=".login.presentation.iu.fragments.LoginFragment">
 
     <data>
         <variable
             name="myLoginViewModel"
-            type="com.example.newsapp.viewmodels.LoginViewModel" />
+            type="com.example.newsapp.login.presentation.iu.viewmodels.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

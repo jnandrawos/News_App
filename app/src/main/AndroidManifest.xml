@@ -17,9 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsApp">
-        <activity android:name=".ui.Homepage" />
+        <activity android:name="com.example.newsapp.home.presentation.iu.activities.Homepage" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".login.presentation.iu.activities.MainActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:exported="true">
