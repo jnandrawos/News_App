@@ -10,16 +10,16 @@
 
 
     <application
-        android:name=".common.NewsApplication"
+        android:name="com.example.newsapp.util.NewsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsApp">
-        <activity android:name="com.example.newsapp.home.presentation.iu.activities.Homepage" />
+        <activity android:name="com.example.newsapp.ui.home.activities.Homepage" />
         <activity
-            android:name=".login.presentation.iu.activities.MainActivity"
+            android:name="com.example.newsapp.ui.login.activities.MainActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:exported="true">

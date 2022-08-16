@@ -3,13 +3,13 @@
 <layout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".login.presentation.iu.fragments.SignupFragment"
+    tools:context=".ui.login.fragments.SignupFragment"
     >
 
     <data>
         <variable
             name="myViewModel"
-            type="com.example.newsapp.login.presentation.iu.viewmodels.SignupViewModel" />
+            type="com.example.newsapp.ui.login.viewmodels.SignupViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

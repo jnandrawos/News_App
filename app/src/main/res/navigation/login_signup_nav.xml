@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.newsapp.login.presentation.iu.fragments.LoginFragment"
+        android:name="com.example.newsapp.ui.login.fragments.LoginFragment"
         android:label="@string/login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.example.newsapp.login.presentation.iu.fragments.SignupFragment"
+        android:name="com.example.newsapp.ui.login.fragments.SignupFragment"
         android:label="@string/signup"
         tools:layout="@layout/fragment_signup" >
         <action
