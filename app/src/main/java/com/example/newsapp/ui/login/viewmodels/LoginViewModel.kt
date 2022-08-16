@@ -73,7 +73,7 @@ class LoginViewModel @Inject constructor(
             _errorToastEmailFormat.value = true
         } else {
             viewModelScope.launch {
-                val emails = repository.getUser(inputEmail.value!!)
+                val emails = repository.getUser(inputEmail.value.toString())
                 if (emails != null) {
                     if (emails.password == inputPassword.value) {
                         EmailPreference(context).setLoggedInEmail(emails.email)

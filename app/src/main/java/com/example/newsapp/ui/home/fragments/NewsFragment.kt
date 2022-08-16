@@ -33,7 +33,7 @@ class NewsFragment : Fragment(), AdapterView.OnItemSelectedListener {
         setupRecyclerView()
 
         newsAdapter.setOnItemClickListener {article ->
-            goToArticle(article.url!!)
+            article.url?.let { goToArticle(it) }
         }
 
         binding.periodSpinner.onItemSelectedListener = this

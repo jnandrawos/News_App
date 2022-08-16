@@ -29,14 +29,14 @@ class ChangePasswordFragment : Fragment() {
             changePasswordViewModel.checkUserPassword(binding.etOldPassword.text.toString(), binding.etNewPassword.text.toString())
         }
 
-        changePasswordViewModel.errorEmptyToast.observe(viewLifecycleOwner, { hasError ->
+        changePasswordViewModel.errorEmptyToast.observe(viewLifecycleOwner) { hasError ->
             if (hasError == true) {
                 Toast.makeText(requireContext(),
                     getString(R.string.fill_fields),
                     Toast.LENGTH_SHORT).show()
                 changePasswordViewModel.doneErrorEmptyToast()
             }
-        })
+        }
 
         changePasswordViewModel.errorNotMatchingToast.observe(viewLifecycleOwner, { hasError ->
             if (hasError == true) {
@@ -59,6 +59,7 @@ class ChangePasswordFragment : Fragment() {
 
         return binding.root
     }
+
 
     private fun goToMore() {
         val action =
