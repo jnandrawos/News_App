@@ -44,7 +44,7 @@ class EditProfileFragment : Fragment() {
             if (result != null) {
                 filePath = result
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    if(requireContext().contentResolver != null) {
+                    if(!requireContext().contentResolver.equals(null)) {
                         val source =
                             ImageDecoder.createSource(requireContext().contentResolver, filePath)
                         bitmap = ImageDecoder.decodeBitmap(source)
@@ -77,14 +77,14 @@ class EditProfileFragment : Fragment() {
         editProfileViewModel.showImage()
 
         editProfileViewModel.setName.observe(viewLifecycleOwner, { wasSet ->
-            if (wasSet == true) {
+            if (wasSet) {
                 binding.etEditFullName.setText(editProfileViewModel.userFullName)
                 editProfileViewModel.doneSetName()
             }
         })
 
         editProfileViewModel.errorToastInvalidName.observe(viewLifecycleOwner, { hasError ->
-            if (hasError == true) {
+            if (hasError) {
                 Toast.makeText(requireContext(),
                     getString(R.string.invalid_name),
                     Toast.LENGTH_SHORT).show()
@@ -93,7 +93,7 @@ class EditProfileFragment : Fragment() {
         })
 
         editProfileViewModel.updateSuccessful.observe(viewLifecycleOwner, { hasFinished ->
-            if (hasFinished == true) {
+            if (hasFinished) {
                 Toast.makeText(requireContext(),
                     getString(R.string.update_successful),
                     Toast.LENGTH_SHORT).show()
@@ -103,7 +103,7 @@ class EditProfileFragment : Fragment() {
         })
 
         editProfileViewModel.showImage.observe(viewLifecycleOwner, { hasSaved ->
-            if (hasSaved == true) {
+            if (hasSaved) {
 
                 viewLifecycleOwner.lifecycleScope.launch {
                     val listOfImages = loadImageFromStorage()

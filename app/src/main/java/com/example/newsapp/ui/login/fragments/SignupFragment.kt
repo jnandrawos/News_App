@@ -37,35 +37,35 @@ class SignupFragment : Fragment() {
 
 
         signupViewModel.navigateTo.observe(viewLifecycleOwner,  { hasFinished->
-            if (hasFinished == true){
+            if (hasFinished){
                 goToLogin()
                 signupViewModel.doneNavigating()
             }
         })
 
         signupViewModel.successfulSignUp.observe(viewLifecycleOwner,  { hasFinished->
-            if(hasFinished==true){
+            if(hasFinished){
                 Toast.makeText(requireContext(), getString(R.string.successful_signup), Toast.LENGTH_SHORT).show()
                 signupViewModel.doneSuccessfulSignUp()
             }
         })
 
         signupViewModel.errorToast.observe(viewLifecycleOwner,  { hasError->
-            if(hasError==true){
+            if(hasError){
                 Toast.makeText(requireContext(), getString(R.string.fill_fields), Toast.LENGTH_SHORT).show()
                 signupViewModel.doneToast()
             }
         })
 
         signupViewModel.errorToastEmail.observe(viewLifecycleOwner,  { hasError->
-            if(hasError==true){
+            if(hasError){
                 Toast.makeText(requireContext(), getString(R.string.email_already_registered), Toast.LENGTH_SHORT).show()
                 signupViewModel.doneToastEmail()
             }
         })
 
         signupViewModel.errorToastEmailFormat.observe(viewLifecycleOwner, { hasError ->
-            if (hasError == true) {
+            if (hasError) {
                 Toast.makeText(requireContext(), getString(R.string.wrong_email_format), Toast.LENGTH_SHORT)
                     .show()
                 signupViewModel.doneToastErrorEmailFormat()
@@ -73,7 +73,7 @@ class SignupFragment : Fragment() {
         })
 
         signupViewModel.errorToastPasswordMismatch.observe(viewLifecycleOwner, { hasError ->
-            if (hasError == true) {
+            if (hasError) {
                 Toast.makeText(requireContext(), getString(R.string.passwords_not_matching), Toast.LENGTH_SHORT)
                     .show()
                 signupViewModel.doneToastErrorPasswordMismatch()

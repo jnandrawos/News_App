@@ -54,8 +54,8 @@ class EditProfileViewModel @Inject constructor(
     fun getUserFullName() {
         uiScope.launch {
             val user = repository.getUser(userEmail)
-            if (user != null) {
-                userFullName = user.name
+            user?.let {
+                userFullName = it.name
                 _setName.value = true
             }
         }
@@ -64,8 +64,8 @@ class EditProfileViewModel @Inject constructor(
     fun updateUser(fullName: String) {
         uiScope.launch {
             val user = repository.getUser(userEmail)
-            if (user != null) {
-                if (fullName != null && fullName != "") {
+            user?.let{
+                if (!fullName.isNullOrEmpty()) {
                     user.name = fullName
                     repository.update(user)
                     _updateSuccessful.value = true

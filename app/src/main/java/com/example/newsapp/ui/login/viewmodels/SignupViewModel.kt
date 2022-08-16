@@ -65,25 +65,24 @@ class SignupViewModel @Inject constructor(private val repository: UserRepository
 
     fun submitButton() {
 
-        if (inputEmail.value == null || inputPassword.value == null || inputConfirmPassword.value == null || inputName.value == null
-            || inputEmail.value == "" || inputPassword.value == "" || inputConfirmPassword.value == "" || inputName.value == ""
-        ) {
+        if (inputEmail.value.isNullOrEmpty() || inputPassword.value.isNullOrEmpty() ||
+            inputConfirmPassword.value.isNullOrEmpty() || inputName.value.isNullOrEmpty()) {
             _errorToast.value = true
         } else if (!Patterns.EMAIL_ADDRESS.matcher(inputEmail.value.toString()).matches()) {
             _errorToastEmailFormat.value = true
-        } else if (inputPassword.value!=inputConfirmPassword.value) {
+        } else if (!inputPassword.value.equals(inputConfirmPassword.value)) {
             _errorToastPasswordMismatch.value = true
         } else {
             viewModelScope.launch {
                 val emails = repository.getUser(inputEmail.value.toString())
-                if (emails != null) {
+                emails?.let {
                     _errorToastEmail.value = true
-                } else {
-                    val email = inputEmail.value.toString()
-                    val password = inputPassword.value.toString()
-                    val name = inputName.value.toString()
-
-                    insert(UserEntity(email, password, name))
+                } ?: kotlin.run {
+                    insert(UserEntity(
+                        inputEmail.value.toString(),
+                        inputPassword.value.toString(),
+                        inputName.value.toString()
+                    ))
                     inputEmail.value = null
                     inputPassword.value = null
                     inputConfirmPassword.value = null

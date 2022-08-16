@@ -67,7 +67,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun loginButton() {
-        if (inputEmail.value == null || inputPassword.value == null || inputEmail.value == "" || inputPassword.value == "") {
+        if (inputPassword.value.isNullOrEmpty()) {
             _errorToast.value = true
         } else if (!Patterns.EMAIL_ADDRESS.matcher(inputEmail.value.toString()).matches()) {
             _errorToastEmailFormat.value = true
@@ -75,7 +75,7 @@ class LoginViewModel @Inject constructor(
             viewModelScope.launch {
                 val emails = repository.getUser(inputEmail.value.toString())
                 if (emails != null) {
-                    if (emails.password == inputPassword.value) {
+                    if (emails.password.equals(inputPassword.value)) {
                         EmailPreference(context).setLoggedInEmail(emails.email)
                         inputEmail.value = null
                         inputPassword.value = null
@@ -94,7 +94,7 @@ class LoginViewModel @Inject constructor(
     fun autoLogin() {
 
         val loggedEmail = EmailPreference(context).getLoggedInEmail()
-        if (loggedEmail != "" && loggedEmail!=null) {
+        if (!loggedEmail.isNullOrEmpty()) {
             _navigateToHome.value = true
         }
     }
