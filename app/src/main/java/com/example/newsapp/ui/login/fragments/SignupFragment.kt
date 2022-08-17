@@ -5,11 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.example.newsapp.R
+import com.example.newsapp.common.UtilityFunctions
 import com.example.newsapp.databinding.FragmentSignupBinding
 import com.example.newsapp.ui.login.viewmodels.SignupViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,19 +45,14 @@ class SignupFragment : Fragment() {
 
         signupViewModel.successfulSignUp.observe(viewLifecycleOwner, { hasFinished ->
             if (hasFinished) {
-                Toast.makeText(requireContext(),
-                    getString(R.string.successful_signup),
-                    Toast.LENGTH_SHORT).show()
+                UtilityFunctions.showToast(requireContext(),getString(R.string.successful_signup))
                 signupViewModel.doneSuccessfulSignUp()
             }
         })
 
         signupViewModel.errorDisplay.observe(viewLifecycleOwner, { hasError ->
             if (hasError && !(signupViewModel.errorMessage.value.isNullOrEmpty())) {
-
-                Toast.makeText(requireContext(),
-                    signupViewModel.errorMessage.value.toString(),
-                    Toast.LENGTH_SHORT).show()
+                UtilityFunctions.showToast(requireContext(),signupViewModel.errorMessage.value.toString())
                 signupViewModel.doneToast()
 
             }

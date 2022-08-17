@@ -6,12 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.example.newsapp.ui.home.activities.Homepage
 import com.example.newsapp.R
+import com.example.newsapp.common.UtilityFunctions
 import com.example.newsapp.databinding.FragmentLoginBinding
 import com.example.newsapp.ui.login.viewmodels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,12 +47,8 @@ class LoginFragment : Fragment() {
 
         loginViewModel.errorDisplay.observe(viewLifecycleOwner, { hasError ->
             if(hasError && !(loginViewModel.errorMessage.value.isNullOrEmpty())){
-
-                Toast.makeText(requireContext(),
-                    loginViewModel.errorMessage.value.toString(),
-                    Toast.LENGTH_SHORT).show()
+                UtilityFunctions.showToast(requireContext(),loginViewModel.errorMessage.value.toString())
                 loginViewModel.doneToast()
-
             }
 
         })

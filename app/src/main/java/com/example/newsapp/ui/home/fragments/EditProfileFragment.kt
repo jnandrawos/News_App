@@ -13,7 +13,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -21,6 +20,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import com.example.newsapp.R
+import com.example.newsapp.common.UtilityFunctions
 import com.example.newsapp.databinding.FragmentEditProfileBinding
 import com.example.newsapp.util.InternalStoragePhoto
 import com.example.newsapp.ui.home.viewmodels.EditProfileViewModel
@@ -44,7 +44,7 @@ class EditProfileFragment : Fragment() {
             if (result != null) {
                 filePath = result
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    if(!requireContext().contentResolver.equals(null)) {
+                    if (!requireContext().contentResolver.equals(null)) {
                         val source =
                             ImageDecoder.createSource(requireContext().contentResolver, filePath)
                         bitmap = ImageDecoder.decodeBitmap(source)
@@ -85,18 +85,14 @@ class EditProfileFragment : Fragment() {
 
         editProfileViewModel.errorToastInvalidName.observe(viewLifecycleOwner, { hasError ->
             if (hasError) {
-                Toast.makeText(requireContext(),
-                    getString(R.string.invalid_name),
-                    Toast.LENGTH_SHORT).show()
+                UtilityFunctions.showToast(requireContext(), getString(R.string.invalid_name))
                 editProfileViewModel.doneErrorToastInvalidName()
             }
         })
 
         editProfileViewModel.updateSuccessful.observe(viewLifecycleOwner, { hasFinished ->
             if (hasFinished) {
-                Toast.makeText(requireContext(),
-                    getString(R.string.update_successful),
-                    Toast.LENGTH_SHORT).show()
+                UtilityFunctions.showToast(requireContext(),getString(R.string.update_successful))
                 goToMore()
                 editProfileViewModel.doneUpdateSuccessful()
             }
