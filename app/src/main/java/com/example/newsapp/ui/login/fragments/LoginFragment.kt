@@ -20,20 +20,27 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private val loginViewModel: LoginViewModel by viewModels()
+    private lateinit var binding: FragmentLoginBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val binding: FragmentLoginBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_login, container, false
         )
 
         binding.myLoginViewModel = loginViewModel
-
         binding.lifecycleOwner = this
+        implementListeners()
+        loginViewModel.autoLogin()
+        initObservers()
 
+        return binding.root
+    }
+
+    private fun implementListeners() {
         binding.signupTv.setOnClickListener {
             loginViewModel.signUP()
         }
@@ -42,9 +49,9 @@ class LoginFragment : Fragment() {
             loginViewModel.loginButton()
         }
 
+    }
 
-        loginViewModel.autoLogin()
-
+    private fun initObservers(){
         loginViewModel.errorDisplay.observe(viewLifecycleOwner, { hasError ->
             if(hasError && !(loginViewModel.errorMessage.value.isNullOrEmpty())){
                 UtilityFunctions.showToast(requireContext(),loginViewModel.errorMessage.value.toString())
@@ -72,8 +79,6 @@ class LoginFragment : Fragment() {
             }
         })
 
-
-        return binding.root
     }
 
 

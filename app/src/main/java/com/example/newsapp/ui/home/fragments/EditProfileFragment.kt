@@ -35,6 +35,7 @@ import java.io.IOException
 class EditProfileFragment : Fragment() {
 
     private val editProfileViewModel: EditProfileViewModel by viewModels()
+    private lateinit var binding: FragmentEditProfileBinding
     private lateinit var filePath: Uri
     private lateinit var bitmap: Bitmap
     private val getImage =
@@ -58,13 +59,22 @@ class EditProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val binding: FragmentEditProfileBinding =
-            FragmentEditProfileBinding.inflate(layoutInflater, container, false)
+        binding = FragmentEditProfileBinding.inflate(layoutInflater, container, false)
 
+        setupViews()
+        implementListeners()
+        initObservers()
+
+        return binding.root
+    }
+
+    private fun setupViews(){
         binding.tvEditEmail.text = editProfileViewModel.getUserEmail()
         editProfileViewModel.getUserFullName()
+        editProfileViewModel.showImage()
+    }
 
-
+    private fun implementListeners() {
         binding.civEditProfile.setOnClickListener {
             getImage.launch("image/")
         }
@@ -72,10 +82,9 @@ class EditProfileFragment : Fragment() {
         binding.updateButton.setOnClickListener {
             editProfileViewModel.updateUser(binding.etEditFullName.text.toString())
         }
+    }
 
-
-        editProfileViewModel.showImage()
-
+    private fun initObservers(){
         editProfileViewModel.setName.observe(viewLifecycleOwner, { wasSet ->
             if (wasSet) {
                 binding.etEditFullName.setText(editProfileViewModel.userFullName)
@@ -92,7 +101,7 @@ class EditProfileFragment : Fragment() {
 
         editProfileViewModel.updateSuccessful.observe(viewLifecycleOwner, { hasFinished ->
             if (hasFinished) {
-                UtilityFunctions.showToast(requireContext(),getString(R.string.update_successful))
+                UtilityFunctions.showToast(requireContext(), getString(R.string.update_successful))
                 goToMore()
                 editProfileViewModel.doneUpdateSuccessful()
             }
@@ -114,11 +123,7 @@ class EditProfileFragment : Fragment() {
                 editProfileViewModel.doneSavingImage()
             }
         })
-
-
-        return binding.root
     }
-
 
     private fun goToMore() {
         val action =

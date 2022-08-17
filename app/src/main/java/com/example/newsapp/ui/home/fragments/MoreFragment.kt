@@ -24,18 +24,26 @@ import kotlinx.coroutines.withContext
 class MoreFragment : Fragment() {
 
     private val moreViewModel: MoreViewModel by viewModels()
+    private lateinit var binding: FragmentMoreBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val binding: FragmentMoreBinding = FragmentMoreBinding.inflate(layoutInflater, container, false)
+        binding= FragmentMoreBinding.inflate(layoutInflater, container, false)
 
+        setupViews()
+        initObservers()
+        implementListeners()
 
+        return binding.root
+    }
+
+    private fun setupViews(){
         moreViewModel.showImage()
+    }
 
-
-
+    private fun implementListeners() {
         binding.tvAboutUs.setOnClickListener {
             goToAboutUs()
         }
@@ -51,7 +59,9 @@ class MoreFragment : Fragment() {
         binding.logoutButton.setOnClickListener {
             moreViewModel.logout()
         }
+    }
 
+    private fun initObservers(){
         moreViewModel.navigateToLogin.observe(viewLifecycleOwner,{hasFinished ->
             if(hasFinished){
                 goToLogin()
@@ -77,12 +87,7 @@ class MoreFragment : Fragment() {
                 moreViewModel.doneSavingImage()
             }
         })
-
-
-
-        return binding.root
     }
-
 
     private suspend fun loadImageFromStorage(): List<InternalStoragePhoto> {
         return withContext(Dispatchers.IO) {

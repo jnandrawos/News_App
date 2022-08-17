@@ -16,33 +16,42 @@ import dagger.hilt.android.AndroidEntryPoint
 class ChangePasswordFragment : Fragment() {
 
     private val changePasswordViewModel: ChangePasswordViewModel by viewModels()
+    private lateinit var binding: FragmentChangePasswordBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val binding: FragmentChangePasswordBinding =
-            FragmentChangePasswordBinding.inflate(layoutInflater, container, false)
+        binding = FragmentChangePasswordBinding.inflate(layoutInflater, container, false)
 
+        implementListeners()
+        initObservers()
+
+        return binding.root
+    }
+
+    private fun implementListeners() {
         binding.saveButton.setOnClickListener {
             changePasswordViewModel.checkUserPassword(binding.etOldPassword.text.toString(),
                 binding.etNewPassword.text.toString())
         }
 
+    }
+
+    private fun initObservers(){
+
         changePasswordViewModel.errorDisplay.observe(viewLifecycleOwner, { hasError ->
             if (hasError && !(changePasswordViewModel.errorMessage.value.isNullOrEmpty())) {
 
-                UtilityFunctions.showToast(requireContext(),changePasswordViewModel.errorMessage.value.toString())
+                UtilityFunctions.showToast(requireContext(),
+                    changePasswordViewModel.errorMessage.value.toString())
                 changePasswordViewModel.doneToast()
                 goToMore()
 
             }
 
         })
-
-        return binding.root
     }
-
 
     private fun goToMore() {
         val action =

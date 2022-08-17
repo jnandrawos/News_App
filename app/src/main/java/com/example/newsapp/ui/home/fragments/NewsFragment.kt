@@ -31,14 +31,22 @@ class NewsFragment : Fragment(), AdapterView.OnItemSelectedListener {
         binding = FragmentNewsBinding.inflate(layoutInflater, container, false)
 
         setupRecyclerView()
+        implementListeners()
+        initObservers()
 
+        return binding.root
+    }
+
+    private fun implementListeners() {
         newsAdapter.setOnItemClickListener {article ->
             article.url?.let { goToArticle(it) }
         }
 
         binding.periodSpinner.onItemSelectedListener = this
 
+    }
 
+    private fun initObservers(){
         newsViewModel.mostViewedNews.observe(viewLifecycleOwner, { response ->
             when (response) {
                 is Resource.Success -> {
@@ -60,9 +68,6 @@ class NewsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
 
         })
-
-
-        return binding.root
     }
 
     private fun hideProgressBar() {

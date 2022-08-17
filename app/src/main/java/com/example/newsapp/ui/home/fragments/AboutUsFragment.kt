@@ -22,11 +22,11 @@ class AboutUsFragment : Fragment() {
     ): View? {
         binding = FragmentAboutUsBinding.inflate(layoutInflater)
 
-        webViewSetup()
+        setupView()
         return binding.root
     }
 
-    private fun webViewSetup() {
+    private fun setupView() {
         binding.wvAboutUs.webViewClient = object : WebViewClient(){
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
