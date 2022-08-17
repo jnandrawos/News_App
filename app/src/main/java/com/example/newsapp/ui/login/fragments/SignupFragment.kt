@@ -21,7 +21,7 @@ class SignupFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val binding: FragmentSignupBinding = DataBindingUtil.inflate(
             inflater,
@@ -36,48 +36,32 @@ class SignupFragment : Fragment() {
         }
 
 
-        signupViewModel.navigateTo.observe(viewLifecycleOwner,  { hasFinished->
-            if (hasFinished){
+        signupViewModel.navigateTo.observe(viewLifecycleOwner, { hasFinished ->
+            if (hasFinished) {
                 goToLogin()
                 signupViewModel.doneNavigating()
             }
         })
 
-        signupViewModel.successfulSignUp.observe(viewLifecycleOwner,  { hasFinished->
-            if(hasFinished){
-                Toast.makeText(requireContext(), getString(R.string.successful_signup), Toast.LENGTH_SHORT).show()
+        signupViewModel.successfulSignUp.observe(viewLifecycleOwner, { hasFinished ->
+            if (hasFinished) {
+                Toast.makeText(requireContext(),
+                    getString(R.string.successful_signup),
+                    Toast.LENGTH_SHORT).show()
                 signupViewModel.doneSuccessfulSignUp()
             }
         })
 
-        signupViewModel.errorToast.observe(viewLifecycleOwner,  { hasError->
-            if(hasError){
-                Toast.makeText(requireContext(), getString(R.string.fill_fields), Toast.LENGTH_SHORT).show()
+        signupViewModel.errorDisplay.observe(viewLifecycleOwner, { hasError ->
+            if (hasError && !(signupViewModel.errorMessage.value.isNullOrEmpty())) {
+
+                Toast.makeText(requireContext(),
+                    signupViewModel.errorMessage.value.toString(),
+                    Toast.LENGTH_SHORT).show()
                 signupViewModel.doneToast()
-            }
-        })
 
-        signupViewModel.errorToastEmail.observe(viewLifecycleOwner,  { hasError->
-            if(hasError){
-                Toast.makeText(requireContext(), getString(R.string.email_already_registered), Toast.LENGTH_SHORT).show()
-                signupViewModel.doneToastEmail()
             }
-        })
 
-        signupViewModel.errorToastEmailFormat.observe(viewLifecycleOwner, { hasError ->
-            if (hasError) {
-                Toast.makeText(requireContext(), getString(R.string.wrong_email_format), Toast.LENGTH_SHORT)
-                    .show()
-                signupViewModel.doneToastErrorEmailFormat()
-            }
-        })
-
-        signupViewModel.errorToastPasswordMismatch.observe(viewLifecycleOwner, { hasError ->
-            if (hasError) {
-                Toast.makeText(requireContext(), getString(R.string.passwords_not_matching), Toast.LENGTH_SHORT)
-                    .show()
-                signupViewModel.doneToastErrorPasswordMismatch()
-            }
         })
 
         return binding.root

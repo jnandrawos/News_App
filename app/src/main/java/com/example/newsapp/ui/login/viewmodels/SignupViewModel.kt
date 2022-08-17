@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.newsapp.R
 import com.example.newsapp.data.local.UserEntity
 import com.example.newsapp.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignupViewModel @Inject constructor(private val repository: UserRepository, application: Application) :
+class SignupViewModel @Inject constructor(
+    private val repository: UserRepository,
+    application: Application,
+) :
     AndroidViewModel(application), Observable {
 
 
@@ -33,6 +37,9 @@ class SignupViewModel @Inject constructor(private val repository: UserRepository
     val inputName = MutableLiveData<String>()
 
 
+    private val context
+        get() = getApplication<Application>()
+
     private val _navigateTo = MutableLiveData<Boolean>()
 
     val navigateTo: LiveData<Boolean>
@@ -43,40 +50,34 @@ class SignupViewModel @Inject constructor(private val repository: UserRepository
     val successfulSignUp: LiveData<Boolean>
         get() = _successfulSignUp
 
-    private val _errorToast = MutableLiveData<Boolean>()
+    private val _errorDisplay = MutableLiveData<Boolean>()
 
-    val errorToast: LiveData<Boolean>
-        get() = _errorToast
+    val errorDisplay: LiveData<Boolean>
+        get() = _errorDisplay
 
-    private val _errorToastEmail = MutableLiveData<Boolean>()
+    var errorMessage = MutableLiveData<String>()
 
-    val errorToastEmail: LiveData<Boolean>
-        get() = _errorToastEmail
-
-    private val _errorToastEmailFormat = MutableLiveData<Boolean>()
-
-    val errorToastEmailFormat: LiveData<Boolean>
-        get() = _errorToastEmailFormat
-
-    private val _errorToastPasswordMismatch = MutableLiveData<Boolean>()
-
-    val errorToastPasswordMismatch: LiveData<Boolean>
-        get() = _errorToastPasswordMismatch
 
     fun submitButton() {
 
         if (inputEmail.value.isNullOrEmpty() || inputPassword.value.isNullOrEmpty() ||
-            inputConfirmPassword.value.isNullOrEmpty() || inputName.value.isNullOrEmpty()) {
-            _errorToast.value = true
+            inputConfirmPassword.value.isNullOrEmpty() || inputName.value.isNullOrEmpty()
+        ) {
+            errorMessage.value = context.resources.getString(R.string.fill_fields)
+            _errorDisplay.value = true
         } else if (!Patterns.EMAIL_ADDRESS.matcher(inputEmail.value.toString()).matches()) {
-            _errorToastEmailFormat.value = true
+            errorMessage.value = context.resources.getString(R.string.wrong_email_format)
+            _errorDisplay.value = true
         } else if (!inputPassword.value.equals(inputConfirmPassword.value)) {
-            _errorToastPasswordMismatch.value = true
+            errorMessage.value = context.resources.getString(R.string.passwords_not_matching)
+            _errorDisplay.value = true
         } else {
             viewModelScope.launch {
                 val emails = repository.getUser(inputEmail.value.toString())
                 emails?.let {
-                    _errorToastEmail.value = true
+                    errorMessage.value =
+                        context.resources.getString(R.string.email_already_registered)
+                    _errorDisplay.value = true
                 } ?: kotlin.run {
                     insert(UserEntity(
                         inputEmail.value.toString(),
@@ -100,22 +101,11 @@ class SignupViewModel @Inject constructor(private val repository: UserRepository
     }
 
     fun doneToast() {
-        _errorToast.value = false
+        _errorDisplay.value = false
     }
 
-    fun doneToastEmail() {
-        _errorToast.value = false
-    }
-
-    fun doneSuccessfulSignUp(){
+    fun doneSuccessfulSignUp() {
         _successfulSignUp.value = false
-    }
-    fun doneToastErrorEmailFormat() {
-        _errorToastEmailFormat.value = false
-    }
-
-    fun doneToastErrorPasswordMismatch() {
-        _errorToastPasswordMismatch.value = false
     }
 
 

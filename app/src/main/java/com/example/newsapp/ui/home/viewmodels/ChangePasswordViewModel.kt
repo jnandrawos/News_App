@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.newsapp.R
 import com.example.newsapp.data.repository.EmailPreference
 import com.example.newsapp.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,50 +26,40 @@ class ChangePasswordViewModel @Inject constructor(
 
     private val userEmail: String = EmailPreference(context).getLoggedInEmail().toString()
 
-    private val _errorEmptyToast = MutableLiveData<Boolean>()
+    private val _errorDisplay = MutableLiveData<Boolean>()
 
-    val errorEmptyToast: LiveData<Boolean>
-        get() = _errorEmptyToast
+    val errorDisplay: LiveData<Boolean>
+        get() = _errorDisplay
 
-    private val _errorNotMatchingToast = MutableLiveData<Boolean>()
+    var errorMessage = MutableLiveData<String>()
 
-    val errorNotMatchingToast: LiveData<Boolean>
-        get() = _errorNotMatchingToast
-
-    private val _passwordSet = MutableLiveData<Boolean>()
-
-    val passwordSet: LiveData<Boolean>
-        get() = _passwordSet
 
     fun checkUserPassword(oldPassword: String, newPassword: String) {
 
         viewModelScope.launch {
             val user = repository.getUser(userEmail)
             if (user != null) {
-                if(!oldPassword.isNullOrEmpty() || !newPassword.isNullOrEmpty() ){
-                    _errorEmptyToast.value = true
+                if(oldPassword.isNullOrEmpty() || newPassword.isNullOrEmpty() ){
+                    errorMessage.value = context.resources.getString(R.string.fill_fields)
+                    _errorDisplay.value = true
                 }else if(!(oldPassword.equals(user.password))){
-                    _errorNotMatchingToast.value = true
+                    errorMessage.value = context.resources.getString(R.string.wrong_password)
+                    _errorDisplay.value = true
                 }else{
                     user.password = newPassword
                     repository.update(user)
-                    _passwordSet.value = true
+                    errorMessage.value = context.resources.getString(R.string.update_successful)
+                    _errorDisplay.value = true
                 }
             }
         }
     }
 
-    fun doneErrorEmptyToast(){
-        _errorEmptyToast.value = false
+    fun doneToast() {
+        _errorDisplay.value = false
     }
 
-    fun doneErrorNotMatchingToast(){
-        _errorNotMatchingToast.value = false
-    }
 
-    fun donePasswordSet(){
-        _passwordSet.value = false
-    }
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
     }
