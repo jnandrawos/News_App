@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
+import com.example.newsapp.R
 import com.example.newsapp.common.UtilityFunctions
 import com.example.newsapp.ui.home.viewmodels.ChangePasswordViewModel
 import com.example.newsapp.databinding.FragmentChangePasswordBinding
@@ -46,7 +47,8 @@ class ChangePasswordFragment : Fragment() {
                 UtilityFunctions.showToast(requireContext(),
                     changePasswordViewModel.errorMessage.value.toString())
                 changePasswordViewModel.doneToast()
-                goToMore()
+                if(changePasswordViewModel.errorMessage.value.equals(getString(R.string.update_successful)))
+                    goToMore()
 
             }
 
