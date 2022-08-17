@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
-import com.example.newsapp.ui.home.activities.Homepage
+import com.example.newsapp.ui.home.activities.HomepageActivity
 import com.example.newsapp.R
 import com.example.newsapp.common.UtilityFunctions
 import com.example.newsapp.databinding.FragmentLoginBinding
@@ -91,7 +91,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun goToHomePage() {
-        startActivity(Intent(context, Homepage::class.java))
+        startActivity(Intent(context, HomepageActivity::class.java))
     }
 
 

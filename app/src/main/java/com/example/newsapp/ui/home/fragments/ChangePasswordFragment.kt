@@ -9,8 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.example.newsapp.R
 import com.example.newsapp.common.UtilityFunctions
-import com.example.newsapp.ui.home.viewmodels.ChangePasswordViewModel
 import com.example.newsapp.databinding.FragmentChangePasswordBinding
+import com.example.newsapp.ui.home.viewmodels.ChangePasswordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

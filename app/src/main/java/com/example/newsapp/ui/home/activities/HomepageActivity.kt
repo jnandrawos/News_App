@@ -12,7 +12,7 @@ import com.example.newsapp.databinding.ActivityHomepageBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class Homepage : AppCompatActivity() {
+class HomepageActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
     private lateinit var binding: ActivityHomepageBinding
