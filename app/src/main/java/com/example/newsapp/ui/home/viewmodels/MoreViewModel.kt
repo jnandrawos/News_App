@@ -31,7 +31,6 @@ class MoreViewModel @Inject constructor(
         get() = _navigateToLogin
 
 
-
     fun showImage() {
         _showImage.value = true
     }
@@ -49,10 +48,9 @@ class MoreViewModel @Inject constructor(
         _navigateToLogin.value = true
     }
 
-    fun doneNavigateToLogin(){
-        _navigateToLogin.value=false
+    fun doneNavigateToLogin() {
+        _navigateToLogin.value = false
     }
-
 
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {

@@ -30,7 +30,7 @@ class MoreFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding= FragmentMoreBinding.inflate(layoutInflater, container, false)
+        binding = FragmentMoreBinding.inflate(layoutInflater, container, false)
 
         setupViews()
         initObservers()
@@ -39,7 +39,7 @@ class MoreFragment : Fragment() {
         return binding.root
     }
 
-    private fun setupViews(){
+    private fun setupViews() {
         moreViewModel.showImage()
     }
 
@@ -61,9 +61,9 @@ class MoreFragment : Fragment() {
         }
     }
 
-    private fun initObservers(){
-        moreViewModel.navigateToLogin.observe(viewLifecycleOwner,{hasFinished ->
-            if(hasFinished){
+    private fun initObservers() {
+        moreViewModel.navigateToLogin.observe(viewLifecycleOwner, { hasFinished ->
+            if (hasFinished) {
                 goToLogin()
                 moreViewModel.doneNavigateToLogin()
                 activity?.finish()
@@ -107,7 +107,7 @@ class MoreFragment : Fragment() {
         activity?.finish()
     }
 
-    private fun goToAboutUs(){
+    private fun goToAboutUs() {
         val action =
             MoreFragmentDirections.actionMoreFragmentToAboutUsFragment()
         NavHostFragment.findNavController(this).navigate(action)
@@ -124,5 +124,4 @@ class MoreFragment : Fragment() {
             MoreFragmentDirections.actionMoreFragmentToChangePasswordFragment()
         NavHostFragment.findNavController(this).navigate(action)
     }
-
 }

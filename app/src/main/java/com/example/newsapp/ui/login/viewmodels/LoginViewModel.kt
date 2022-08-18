@@ -31,25 +31,16 @@ class LoginViewModel @Inject constructor(
 
     private val context
         get() = getApplication<Application>()
-
     private val _navigateToSignup = MutableLiveData<Boolean>()
-
     val navigateToSignup: LiveData<Boolean>
         get() = _navigateToSignup
-
     private val _navigateToHome = MutableLiveData<Boolean>()
-
     val navigateToHome: LiveData<Boolean>
         get() = _navigateToHome
-
     private val _errorDisplay = MutableLiveData<Boolean>()
-
     val errorDisplay: LiveData<Boolean>
         get() = _errorDisplay
-
     var errorMessage = MutableLiveData<String>()
-
-
 
     fun signUP() {
         _navigateToSignup.value = true
@@ -85,7 +76,6 @@ class LoginViewModel @Inject constructor(
 
 
     fun autoLogin() {
-
         val loggedEmail = EmailPreference(context).getLoggedInEmail()
         if (!loggedEmail.isNullOrEmpty()) {
             _navigateToHome.value = true
@@ -101,17 +91,13 @@ class LoginViewModel @Inject constructor(
         _navigateToHome.value = false
     }
 
-
     fun doneToast() {
         _errorDisplay.value = false
     }
 
-
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
-
     }
 
     override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
     }
-
 }

@@ -14,7 +14,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class RetrofitInstance {
-
     val client = OkHttpClient.Builder()
         .build()
 
@@ -33,6 +32,4 @@ class RetrofitInstance {
     @Singleton
     @Provides
     fun providesRepository(newsAPI: NewsAPI) = NewsRepository(newsAPI)
-
-
 }

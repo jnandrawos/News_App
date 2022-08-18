@@ -33,19 +33,17 @@ class ChangePasswordViewModel @Inject constructor(
 
     var errorMessage = MutableLiveData<String>()
 
-
     fun checkUserPassword(oldPassword: String, newPassword: String) {
-
         viewModelScope.launch {
             val user = repository.getUser(userEmail)
             if (user != null) {
-                if(oldPassword.isNullOrEmpty() || newPassword.isNullOrEmpty() ){
+                if (oldPassword.isNullOrEmpty() || newPassword.isNullOrEmpty()) {
                     errorMessage.value = context.resources.getString(R.string.fill_fields)
                     _errorDisplay.value = true
-                }else if(!(oldPassword.equals(user.password))){
+                } else if (!(oldPassword.equals(user.password))) {
                     errorMessage.value = context.resources.getString(R.string.wrong_password)
                     _errorDisplay.value = true
-                }else{
+                } else {
                     user.password = newPassword
                     repository.update(user)
                     errorMessage.value = context.resources.getString(R.string.update_successful)
@@ -58,8 +56,6 @@ class ChangePasswordViewModel @Inject constructor(
     fun doneToast() {
         _errorDisplay.value = false
     }
-
-
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
     }

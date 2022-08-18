@@ -40,8 +40,6 @@ class EditProfileFragment : Fragment() {
     private lateinit var bitmap: Bitmap
     private val getImage =
         registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
-
-
             if (result != null) {
                 filePath = result
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -68,7 +66,7 @@ class EditProfileFragment : Fragment() {
         return binding.root
     }
 
-    private fun setupViews(){
+    private fun setupViews() {
         binding.tvEditEmail.text = editProfileViewModel.getUserEmail()
         editProfileViewModel.getUserFullName()
         editProfileViewModel.showImage()
@@ -84,7 +82,7 @@ class EditProfileFragment : Fragment() {
         }
     }
 
-    private fun initObservers(){
+    private fun initObservers() {
         editProfileViewModel.setName.observe(viewLifecycleOwner, { wasSet ->
             if (wasSet) {
                 binding.etEditFullName.setText(editProfileViewModel.userFullName)
@@ -119,7 +117,6 @@ class EditProfileFragment : Fragment() {
                         }
                     }
                 }
-
                 editProfileViewModel.doneSavingImage()
             }
         })
@@ -141,7 +138,6 @@ class EditProfileFragment : Fragment() {
 
 
     private fun saveImageToStorage(fileName: String, bitmap: Bitmap): Boolean {
-
         return try {
             requireContext().openFileOutput("$fileName.jpg", Context.MODE_PRIVATE)
                 .use { outputStream ->
@@ -150,7 +146,6 @@ class EditProfileFragment : Fragment() {
                         throw IOException(getString(R.string.bitmap_error))
                     }
                 }
-
             true
         } catch (e: IOException) {
             Log.e(getString(R.string.error), e.toString())
@@ -170,6 +165,4 @@ class EditProfileFragment : Fragment() {
             }
         }
     }
-
-
 }

@@ -23,7 +23,6 @@ class SignupViewModel @Inject constructor(
 ) :
     AndroidViewModel(application), Observable {
 
-
     @Bindable
     val inputEmail = MutableLiveData<String>()
 
@@ -36,30 +35,20 @@ class SignupViewModel @Inject constructor(
     @Bindable
     val inputName = MutableLiveData<String>()
 
-
     private val context
         get() = getApplication<Application>()
-
     private val _navigateTo = MutableLiveData<Boolean>()
-
     val navigateTo: LiveData<Boolean>
         get() = _navigateTo
-
     private val _successfulSignUp = MutableLiveData<Boolean>()
-
     val successfulSignUp: LiveData<Boolean>
         get() = _successfulSignUp
-
     private val _errorDisplay = MutableLiveData<Boolean>()
-
     val errorDisplay: LiveData<Boolean>
         get() = _errorDisplay
-
     var errorMessage = MutableLiveData<String>()
 
-
     fun submitButton() {
-
         if (inputEmail.value.isNullOrEmpty() || inputPassword.value.isNullOrEmpty() ||
             inputConfirmPassword.value.isNullOrEmpty() || inputName.value.isNullOrEmpty()
         ) {
@@ -108,19 +97,13 @@ class SignupViewModel @Inject constructor(
         _successfulSignUp.value = false
     }
 
-
     private fun insert(user: UserEntity): Job = viewModelScope.launch {
         repository.insert(user)
     }
 
-
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
-
     }
 
     override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
-
     }
-
-
 }

@@ -18,13 +18,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-
-        navController = (supportFragmentManager.findFragmentById(R.id.mainFragment) as NavHostFragment).navController
+        navController =
+            (supportFragmentManager.findFragmentById(R.id.mainFragment) as NavHostFragment).navController
 
         setupActionBarWithNavController(navController)
 
     }
-
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()

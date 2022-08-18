@@ -64,7 +64,7 @@ class EditProfileViewModel @Inject constructor(
     fun updateUser(fullName: String) {
         uiScope.launch {
             val user = repository.getUser(userEmail)
-            user?.let{
+            user?.let {
                 if (!fullName.isNullOrEmpty()) {
                     user.name = fullName
                     repository.update(user)
@@ -76,11 +76,9 @@ class EditProfileViewModel @Inject constructor(
         }
     }
 
-
     fun showImage() {
         _showImage.value = true
     }
-
 
     fun doneSavingImage() {
         _showImage.value = false
