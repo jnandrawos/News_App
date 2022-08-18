@@ -109,7 +109,7 @@ class EditProfileFragment : Fragment() {
             if (hasSaved) {
 
                 viewLifecycleOwner.lifecycleScope.launch {
-                    val listOfImages = loadImageFromStorage()
+                    val listOfImages = editProfileViewModel.loadImageFromStorage()
                     for (im in listOfImages) {
                         if (im.name.contains(editProfileViewModel.getUserEmail())) {
                             Glide.with(requireContext()).load(im.bitmap).circleCrop()
@@ -153,16 +153,4 @@ class EditProfileFragment : Fragment() {
         }
     }
 
-    private suspend fun loadImageFromStorage(): List<InternalStoragePhoto> {
-        return withContext(Dispatchers.IO) {
-            val files = requireContext().filesDir.listFiles()
-            files.filter {
-                it.canRead() && it.name.endsWith(".jpg")
-            }.map {
-                val bytes = it.readBytes()
-                val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                InternalStoragePhoto(it.name, bitmap)
-            }
-        }
-    }
 }

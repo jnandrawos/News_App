@@ -1,17 +1,16 @@
 package com.example.newsapp.ui.home.viewmodels
 
 import android.app.Application
+import android.graphics.BitmapFactory
 import androidx.databinding.Observable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.newsapp.data.repository.EmailPreference
 import com.example.newsapp.data.repository.UserRepository
+import com.example.newsapp.util.InternalStoragePhoto
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -94,6 +93,19 @@ class EditProfileViewModel @Inject constructor(
 
     fun doneUpdateSuccessful() {
         _updateSuccessful.value = false
+    }
+
+    suspend fun loadImageFromStorage(): List<InternalStoragePhoto> {
+        return withContext(Dispatchers.IO) {
+            val files = context.filesDir.listFiles()
+            files.filter {
+                it.canRead() && it.name.endsWith(".jpg")
+            }.map {
+                val bytes = it.readBytes()
+                val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                InternalStoragePhoto(it.name, bitmap)
+            }
+        }
     }
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {

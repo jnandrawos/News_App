@@ -75,7 +75,7 @@ class MoreFragment : Fragment() {
             if (hasSaved) {
 
                 viewLifecycleOwner.lifecycleScope.launch {
-                    val listOfImages = loadImageFromStorage()
+                    val listOfImages = moreViewModel.loadImageFromStorage()
                     for (im in listOfImages) {
                         if (im.name.contains(moreViewModel.getUserEmail())) {
                             Glide.with(requireContext()).load(im.bitmap).circleCrop()
@@ -89,18 +89,6 @@ class MoreFragment : Fragment() {
         })
     }
 
-    private suspend fun loadImageFromStorage(): List<InternalStoragePhoto> {
-        return withContext(Dispatchers.IO) {
-            val files = requireContext().filesDir.listFiles()
-            files.filter {
-                it.canRead() && it.name.endsWith(".jpg")
-            }.map {
-                val bytes = it.readBytes()
-                val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                InternalStoragePhoto(it.name, bitmap)
-            }
-        }
-    }
 
     private fun goToLogin() {
         startActivity(Intent(context, MainActivity::class.java))
