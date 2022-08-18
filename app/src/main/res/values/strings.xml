@@ -17,6 +17,7 @@
     <string name="about_us">ABOUT US</string>
     <string name="logout">LOGOUT</string>
     <string name="error">Error</string>
+    <string name="permission_error">Error, permission not granted</string>
     <string name="nyt_about_us">https://www.nytco.com/company/</string>
     <string name="email_label">Email</string>
     <string name="update">UPDATE</string>
@@ -40,6 +41,9 @@
     <string name="wrong_email_format">Email has wrong format</string>
     <string name="successful_signup">You have signed up successfully!</string>
     <string name="email_already_registered">Email already registered</string>
+    <string name="camera">Camera</string>
+    <string name="storage">Storage</string>
+    <string name="bottom_sheet_tag">BottomSheet_TAG</string>
 
     <string-array name="periods">
     <item>1 day</item>
