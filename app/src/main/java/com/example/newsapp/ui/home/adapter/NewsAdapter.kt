@@ -40,7 +40,7 @@ class NewsAdapter :
         val article = differ.currentList[position]
         holder.itemView.apply {
             val binding: ArticleItemBinding = ArticleItemBinding.bind(holder.itemView)
-            if (!article.media.isNullOrEmpty()) {
+            if (!article.media.isNullOrEmpty()&&!article.media[0].mediaMetadata.isNullOrEmpty()) {
                 Glide.with(holder.itemView).load(article.media[0].mediaMetadata[0].url)
                     .into(binding.ivArticleImage)
             } else {
