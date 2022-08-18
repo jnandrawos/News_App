@@ -4,12 +4,10 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,12 +20,9 @@ import com.bumptech.glide.Glide
 import com.example.newsapp.R
 import com.example.newsapp.common.UtilityFunctions
 import com.example.newsapp.databinding.FragmentEditProfileBinding
-import com.example.newsapp.util.InternalStoragePhoto
 import com.example.newsapp.ui.home.viewmodels.EditProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.IOException
 
 
@@ -142,13 +137,13 @@ class EditProfileFragment : Fragment() {
             requireContext().openFileOutput("$fileName.jpg", Context.MODE_PRIVATE)
                 .use { outputStream ->
                     editProfileViewModel.showImage()
-                    if (bitmap.compress(Bitmap.CompressFormat.JPEG, 95, outputStream)) {
+                    if (bitmap.compress(Bitmap.CompressFormat.JPEG, 95, outputStream).not()) {
                         throw IOException(getString(R.string.bitmap_error))
                     }
                 }
             true
         } catch (e: IOException) {
-            Log.e(getString(R.string.error), e.toString())
+            UtilityFunctions.printLogs(getString(R.string.error), e.toString())
             false
         }
     }
