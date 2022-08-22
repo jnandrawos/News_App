@@ -38,7 +38,7 @@ class ChangePasswordViewModel @Inject constructor(
 
         viewModelScope.launch {
             val user = repository.getUser(userEmail)
-            if (user != null) {
+            user?.let {
                 if(oldPassword.isNullOrEmpty() || newPassword.isNullOrEmpty() ){
                     errorMessage.value = context.resources.getString(R.string.fill_fields)
                     _errorDisplay.value = true
