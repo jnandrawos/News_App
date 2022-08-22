@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/til_margin"
-    tools:context=".home.presentation.iu.fragments.EditProfileFragment">
+    tools:context=".ui.home.fragments.EditProfileFragment">
 
 
     <de.hdodenhof.circleimageview.CircleImageView
