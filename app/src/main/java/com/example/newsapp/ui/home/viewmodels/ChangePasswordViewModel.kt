@@ -42,13 +42,13 @@ class ChangePasswordViewModel @Inject constructor(
                         errorMessage.value = context.resources.getString(R.string.fill_fields)
                         _errorDisplay.value = true
                     }
-                    !(oldPassword.equals(user.password)) -> {
+                    !(oldPassword.equals(it.password)) -> {
                         errorMessage.value = context.resources.getString(R.string.wrong_password)
                         _errorDisplay.value = true
                     }
                     else -> {
-                        user.password = newPassword
-                        repository.update(user)
+                        it.password = newPassword
+                        repository.update(it)
                         errorMessage.value = context.resources.getString(R.string.update_successful)
                         _errorDisplay.value = true
                     }
