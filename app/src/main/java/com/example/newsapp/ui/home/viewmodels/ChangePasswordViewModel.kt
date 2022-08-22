@@ -36,18 +36,22 @@ class ChangePasswordViewModel @Inject constructor(
     fun checkUserPassword(oldPassword: String, newPassword: String) {
         viewModelScope.launch {
             val user = repository.getUser(userEmail)
-            if (user != null) {
-                if (oldPassword.isNullOrEmpty() || newPassword.isNullOrEmpty()) {
-                    errorMessage.value = context.resources.getString(R.string.fill_fields)
-                    _errorDisplay.value = true
-                } else if (!(oldPassword.equals(user.password))) {
-                    errorMessage.value = context.resources.getString(R.string.wrong_password)
-                    _errorDisplay.value = true
-                } else {
-                    user.password = newPassword
-                    repository.update(user)
-                    errorMessage.value = context.resources.getString(R.string.update_successful)
-                    _errorDisplay.value = true
+            user?.let {
+                when {
+                    oldPassword.isNullOrEmpty() || newPassword.isNullOrEmpty() -> {
+                        errorMessage.value = context.resources.getString(R.string.fill_fields)
+                        _errorDisplay.value = true
+                    }
+                    !(oldPassword.equals(user.password)) -> {
+                        errorMessage.value = context.resources.getString(R.string.wrong_password)
+                        _errorDisplay.value = true
+                    }
+                    else -> {
+                        user.password = newPassword
+                        repository.update(user)
+                        errorMessage.value = context.resources.getString(R.string.update_successful)
+                        _errorDisplay.value = true
+                    }
                 }
             }
         }

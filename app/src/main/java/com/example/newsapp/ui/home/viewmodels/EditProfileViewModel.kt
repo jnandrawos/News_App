@@ -65,12 +65,12 @@ class EditProfileViewModel @Inject constructor(
         uiScope.launch {
             val user = repository.getUser(userEmail)
             user?.let {
-                if (!fullName.isNullOrEmpty()) {
+                if (fullName.isNullOrEmpty()) {
+                    _errorToastInvalidName.value = true
+                } else {
                     user.name = fullName
                     repository.update(user)
                     _updateSuccessful.value = true
-                } else {
-                    _errorToastInvalidName.value = true
                 }
             }
         }
