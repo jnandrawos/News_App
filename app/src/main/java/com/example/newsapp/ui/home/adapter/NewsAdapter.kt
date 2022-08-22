@@ -41,7 +41,7 @@ class NewsAdapter :
         holder.itemView.apply {
             val binding: ArticleItemBinding = ArticleItemBinding.bind(holder.itemView)
             article.media.firstOrNull()?.mediaMetadata?.firstOrNull()?.let{
-                Glide.with(holder.itemView).load(article.media[0].mediaMetadata[0].url)
+                Glide.with(holder.itemView).load(it.url)
                     .into(binding.ivArticleImage)
             } ?: run {
                 binding.ivArticleImage.visibility = View.GONE
