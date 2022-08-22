@@ -20,7 +20,4 @@
     <dimen name="news_padding">16dp</dimen>
     <dimen name="arrow_size">24dp</dimen>
     <dimen name="article_image_size">125dp</dimen>
-    <dimen name="sheet_label">20sp</dimen>
-    <dimen name="bottom_sheet_padding">25dp</dimen>
-    <dimen name="bottom_sheet_icon_size">100dp</dimen>
 </resources>
