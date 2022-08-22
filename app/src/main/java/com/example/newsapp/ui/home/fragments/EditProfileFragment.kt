@@ -44,9 +44,11 @@ class EditProfileFragment : Fragment() {
             if (result != null) {
                 filePath = result
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    val source =
-                        ImageDecoder.createSource(requireContext().contentResolver!!, filePath)
-                    bitmap = ImageDecoder.decodeBitmap(source)
+                    if(requireContext().contentResolver != null) {
+                        val source =
+                            ImageDecoder.createSource(requireContext().contentResolver, filePath)
+                        bitmap = ImageDecoder.decodeBitmap(source)
+                    }
                 }
                 saveImageToStorage(editProfileViewModel.getUserEmail(), bitmap)
             }
@@ -130,7 +132,7 @@ class EditProfileFragment : Fragment() {
 
     private fun checkPermissionForReadExternalStorage(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val result = context!!.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+            val result = context?.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
             return result == PackageManager.PERMISSION_GRANTED
         }
         return false

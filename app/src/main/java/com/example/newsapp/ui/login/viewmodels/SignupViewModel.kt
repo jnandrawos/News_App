@@ -33,7 +33,6 @@ class SignupViewModel @Inject constructor(private val repository: UserRepository
     val inputName = MutableLiveData<String>()
 
 
-
     private val _navigateTo = MutableLiveData<Boolean>()
 
     val navigateTo: LiveData<Boolean>
@@ -76,14 +75,13 @@ class SignupViewModel @Inject constructor(private val repository: UserRepository
             _errorToastPasswordMismatch.value = true
         } else {
             viewModelScope.launch {
-
-                val emails = repository.getUser(inputEmail.value!!)
+                val emails = repository.getUser(inputEmail.value.toString())
                 if (emails != null) {
                     _errorToastEmail.value = true
                 } else {
-                    val email = inputEmail.value!!
-                    val password = inputPassword.value!!
-                    val name = inputName.value!!
+                    val email = inputEmail.value.toString()
+                    val password = inputPassword.value.toString()
+                    val name = inputName.value.toString()
 
                     insert(UserEntity(email, password, name))
                     inputEmail.value = null
