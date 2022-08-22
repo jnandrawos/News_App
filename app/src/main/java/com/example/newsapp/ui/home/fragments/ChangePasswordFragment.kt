@@ -26,39 +26,25 @@ class ChangePasswordFragment : Fragment() {
             FragmentChangePasswordBinding.inflate(layoutInflater, container, false)
 
         binding.saveButton.setOnClickListener {
-            changePasswordViewModel.checkUserPassword(binding.etOldPassword.text.toString(), binding.etNewPassword.text.toString())
+            changePasswordViewModel.checkUserPassword(binding.etOldPassword.text.toString(),
+                binding.etNewPassword.text.toString())
         }
 
-        changePasswordViewModel.errorEmptyToast.observe(viewLifecycleOwner, { hasError ->
-            if (hasError == true) {
-                Toast.makeText(requireContext(),
-                    getString(R.string.fill_fields),
-                    Toast.LENGTH_SHORT).show()
-                changePasswordViewModel.doneErrorEmptyToast()
-            }
-        })
+        changePasswordViewModel.errorDisplay.observe(viewLifecycleOwner, { hasError ->
+            if (hasError && !(changePasswordViewModel.errorMessage.value.isNullOrEmpty())) {
 
-        changePasswordViewModel.errorNotMatchingToast.observe(viewLifecycleOwner, { hasError ->
-            if (hasError == true) {
                 Toast.makeText(requireContext(),
-                    getString(R.string.wrong_password),
+                    changePasswordViewModel.errorMessage.value.toString(),
                     Toast.LENGTH_SHORT).show()
-                changePasswordViewModel.doneErrorNotMatchingToast()
-            }
-        })
+                changePasswordViewModel.doneToast()
 
-        changePasswordViewModel.passwordSet.observe(viewLifecycleOwner, { hasError ->
-            if (hasError == true) {
-                Toast.makeText(requireContext(),
-                    getString(R.string.update_successful),
-                    Toast.LENGTH_SHORT).show()
-                goToMore()
-                changePasswordViewModel.donePasswordSet()
             }
+
         })
 
         return binding.root
     }
+
 
     private fun goToMore() {
         val action =

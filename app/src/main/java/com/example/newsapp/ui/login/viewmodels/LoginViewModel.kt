@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.newsapp.R
 import com.example.newsapp.data.repository.UserRepository
 import com.example.newsapp.data.repository.EmailPreference
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -41,25 +42,13 @@ class LoginViewModel @Inject constructor(
     val navigateToHome: LiveData<Boolean>
         get() = _navigateToHome
 
-    private val _errorToast = MutableLiveData<Boolean>()
+    private val _errorDisplay = MutableLiveData<Boolean>()
 
-    val errorToast: LiveData<Boolean>
-        get() = _errorToast
+    val errorDisplay: LiveData<Boolean>
+        get() = _errorDisplay
 
-    private val _errorToastEmailFormat = MutableLiveData<Boolean>()
+    var errorMessage = MutableLiveData<String>()
 
-    val errorToastEmailFormat: LiveData<Boolean>
-        get() = _errorToastEmailFormat
-
-    private val _errorToastEmail = MutableLiveData<Boolean>()
-
-    val errorToastEmail: LiveData<Boolean>
-        get() = _errorToastEmail
-
-    private val _errorToastInvalidPassword = MutableLiveData<Boolean>()
-
-    val errorToastInvalidPassword: LiveData<Boolean>
-        get() = _errorToastInvalidPassword
 
 
     fun signUP() {
@@ -67,24 +56,28 @@ class LoginViewModel @Inject constructor(
     }
 
     fun loginButton() {
-        if (inputEmail.value == null || inputPassword.value == null || inputEmail.value == "" || inputPassword.value == "") {
-            _errorToast.value = true
+        if (inputPassword.value.isNullOrEmpty() || inputEmail.value.isNullOrEmpty()) {
+            errorMessage.value = context.resources.getString(R.string.fill_fields)
+            _errorDisplay.value = true
         } else if (!Patterns.EMAIL_ADDRESS.matcher(inputEmail.value.toString()).matches()) {
-            _errorToastEmailFormat.value = true
+            errorMessage.value = context.resources.getString(R.string.wrong_email_format)
+            _errorDisplay.value = true
         } else {
             viewModelScope.launch {
-                val emails = repository.getUser(inputEmail.value!!)
-                if (emails != null) {
-                    if (emails.password == inputPassword.value) {
+                val emails = repository.getUser(inputEmail.value.toString())
+                emails?.let {
+                    if (emails.password.equals(inputPassword.value)) {
                         EmailPreference(context).setLoggedInEmail(emails.email)
                         inputEmail.value = null
                         inputPassword.value = null
                         _navigateToHome.value = true
                     } else {
-                        _errorToastInvalidPassword.value = true
+                        errorMessage.value = context.resources.getString(R.string.check_password)
+                        _errorDisplay.value = true
                     }
-                } else {
-                    _errorToastEmail.value = true
+                } ?: run {
+                    errorMessage.value = context.resources.getString(R.string.user_not_existing)
+                    _errorDisplay.value = true
                 }
             }
         }
@@ -94,7 +87,7 @@ class LoginViewModel @Inject constructor(
     fun autoLogin() {
 
         val loggedEmail = EmailPreference(context).getLoggedInEmail()
-        if (loggedEmail != "" && loggedEmail!=null) {
+        if (!loggedEmail.isNullOrEmpty()) {
             _navigateToHome.value = true
         }
     }
@@ -110,21 +103,7 @@ class LoginViewModel @Inject constructor(
 
 
     fun doneToast() {
-        _errorToast.value = false
-    }
-
-
-    fun doneToastErrorEmail() {
-        _errorToastEmail.value = false
-    }
-
-    fun doneToastErrorEmailFormat() {
-        _errorToastEmailFormat.value = false
-    }
-
-    fun doneToastInvalidPassword() {
-        _errorToastInvalidPassword.value = false
-
+        _errorDisplay.value = false
     }
 
 

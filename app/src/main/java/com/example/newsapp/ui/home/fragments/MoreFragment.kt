@@ -53,7 +53,7 @@ class MoreFragment : Fragment() {
         }
 
         moreViewModel.navigateToLogin.observe(viewLifecycleOwner,{hasFinished ->
-            if(hasFinished==true){
+            if(hasFinished){
                 goToLogin()
                 moreViewModel.doneNavigateToLogin()
                 activity?.finish()
@@ -62,7 +62,7 @@ class MoreFragment : Fragment() {
         })
 
         moreViewModel.showImage.observe(viewLifecycleOwner, { hasSaved ->
-            if (hasSaved == true) {
+            if (hasSaved) {
 
                 viewLifecycleOwner.lifecycleScope.launch {
                     val listOfImages = loadImageFromStorage()
