@@ -56,17 +56,8 @@ class MoreViewModel @Inject constructor(
         _navigateToLogin.value = false
     }
 
-    suspend fun loadImageFromStorage(): List<InternalStoragePhoto> {
-        return withContext(Dispatchers.IO) {
-            val files = context.filesDir.listFiles()
-            files.filter {
-                it.canRead() && it.name.endsWith(".jpg")
-            }.map {
-                val bytes = it.readBytes()
-                val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                InternalStoragePhoto(it.name, bitmap)
-            }
-        }
+    suspend fun getUserImagePath() : String?{
+        return repository.getUser(userEmail)?.imagePath
     }
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {

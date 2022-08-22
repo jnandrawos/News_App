@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -21,13 +20,12 @@ import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import com.example.newsapp.R
 import com.example.newsapp.common.UtilityFunctions
+import com.example.newsapp.common.toBase64
+import com.example.newsapp.common.toBitmap
 import com.example.newsapp.databinding.FragmentEditProfileBinding
-import com.example.newsapp.util.InternalStoragePhoto
 import com.example.newsapp.ui.home.viewmodels.EditProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.IOException
 
 
@@ -49,7 +47,8 @@ class EditProfileFragment : Fragment() {
                         bitmap = ImageDecoder.decodeBitmap(source)
                     }
                 }
-                saveImageToStorage(editProfileViewModel.getUserEmail(), bitmap)
+                editProfileViewModel.updateUserImage(filePath.toBitmap(requireActivity())
+                    .toBase64())
             }
         }
 
@@ -107,15 +106,16 @@ class EditProfileFragment : Fragment() {
 
         editProfileViewModel.showImage.observe(viewLifecycleOwner, { hasSaved ->
             if (hasSaved) {
-
-                viewLifecycleOwner.lifecycleScope.launch {
-                    val listOfImages = editProfileViewModel.loadImageFromStorage()
-                    for (im in listOfImages) {
-                        if (im.name.contains(editProfileViewModel.getUserEmail())) {
-                            Glide.with(requireContext()).load(im.bitmap).circleCrop()
-                                .into(binding.civEditProfile)
+                try {
+                    lifecycleScope.launch {
+                        editProfileViewModel.getUserImagePath()?.let {
+                            Glide.with((requireActivity()))
+                                .load(it.toBitmap())
+                                .circleCrop().into(binding.civEditProfile)
                         }
                     }
+                } catch (e: Exception) {
+                    UtilityFunctions.showToast(requireActivity(), getString(R.string.image_error))
                 }
                 editProfileViewModel.doneSavingImage()
             }
@@ -134,23 +134,6 @@ class EditProfileFragment : Fragment() {
             return result == PackageManager.PERMISSION_GRANTED
         }
         return false
-    }
-
-
-    private fun saveImageToStorage(fileName: String, bitmap: Bitmap): Boolean {
-        return try {
-            requireContext().openFileOutput("$fileName.jpg", Context.MODE_PRIVATE)
-                .use { outputStream ->
-                    editProfileViewModel.showImage()
-                    if (bitmap.compress(Bitmap.CompressFormat.JPEG, 95, outputStream)) {
-                        throw IOException(getString(R.string.bitmap_error))
-                    }
-                }
-            true
-        } catch (e: IOException) {
-            Log.e(getString(R.string.error), e.toString())
-            false
-        }
     }
 
 }

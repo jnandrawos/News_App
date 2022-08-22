@@ -11,6 +11,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
+import com.example.newsapp.R
+import com.example.newsapp.common.UtilityFunctions
+import com.example.newsapp.common.toBitmap
 import com.example.newsapp.ui.login.activities.MainActivity
 import com.example.newsapp.databinding.FragmentMoreBinding
 import com.example.newsapp.ui.home.viewmodels.MoreViewModel
@@ -74,14 +77,16 @@ class MoreFragment : Fragment() {
         moreViewModel.showImage.observe(viewLifecycleOwner, { hasSaved ->
             if (hasSaved) {
 
-                viewLifecycleOwner.lifecycleScope.launch {
-                    val listOfImages = moreViewModel.loadImageFromStorage()
-                    for (im in listOfImages) {
-                        if (im.name.contains(moreViewModel.getUserEmail())) {
-                            Glide.with(requireContext()).load(im.bitmap).circleCrop()
-                                .into(binding.civProfile)
+                try {
+                    lifecycleScope.launch {
+                        moreViewModel.getUserImagePath()?.let {
+                            Glide.with((requireActivity()))
+                                .load(it.toBitmap())
+                                .circleCrop().into(binding.civProfile)
                         }
                     }
+                } catch (e: Exception) {
+                    UtilityFunctions.showToast(requireActivity(), getString(R.string.image_error))
                 }
 
                 moreViewModel.doneSavingImage()
