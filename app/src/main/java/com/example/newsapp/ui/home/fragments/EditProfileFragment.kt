@@ -60,12 +60,14 @@ class EditProfileFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentEditProfileBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupViews()
         implementListeners()
         initObservers()
-
-        return binding.root
     }
 
     private fun setupViews(){

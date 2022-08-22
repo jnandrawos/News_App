@@ -21,9 +21,12 @@ class AboutUsFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentAboutUsBinding.inflate(layoutInflater)
-
-        setupView()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupView()
     }
 
     private fun setupView() {
