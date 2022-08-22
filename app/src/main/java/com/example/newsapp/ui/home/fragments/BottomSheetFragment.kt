@@ -8,21 +8,20 @@ import com.example.newsapp.databinding.ImagePickerFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class BottomSheetFragment : BottomSheetDialogFragment() {
-    private var cameraListener: (()->Unit)? =null
-    private var storageListener: (()->Unit)? =null
-
+    private var cameraListener: (() -> Unit)? = null
+    private var storageListener: (() -> Unit)? = null
     private lateinit var binding: ImagePickerFragmentBinding
 
-    fun setOnCameraClickListener(listener: (()->Unit)) = apply { this.cameraListener = listener }
-    fun setOnStorageClickListener(listener: (()->Unit)) = apply { this.storageListener = listener }
+    fun setOnCameraClickListener(listener: (() -> Unit)) = apply { this.cameraListener = listener }
+    fun setOnStorageClickListener(listener: (() -> Unit)) =
+        apply { this.storageListener = listener }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
-        binding = ImagePickerFragmentBinding.inflate(layoutInflater,container,false)
-
+        binding = ImagePickerFragmentBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -30,14 +29,13 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         initListeners()
     }
-    private fun initListeners(){
-        binding.cameraButton.setOnClickListener{
+
+    private fun initListeners() {
+        binding.cameraButton.setOnClickListener {
             cameraListener?.invoke()
         }
-        binding.storageButton.setOnClickListener{
+        binding.storageButton.setOnClickListener {
             storageListener?.invoke()
         }
-
     }
-
 }

@@ -169,7 +169,7 @@ class EditProfileFragment : Fragment() {
 
     private fun getBitmapFromUri(filePath: Uri) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            if (!requireContext().contentResolver.equals(null)) {
+            requireContext().contentResolver?.let {
                 val source =
                     ImageDecoder.createSource(requireContext().contentResolver, filePath)
                 bitmap = ImageDecoder.decodeBitmap(source)
