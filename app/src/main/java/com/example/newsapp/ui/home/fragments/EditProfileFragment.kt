@@ -171,7 +171,7 @@ class EditProfileFragment : Fragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             requireContext().contentResolver?.let {
                 val source =
-                    ImageDecoder.createSource(requireContext().contentResolver, filePath)
+                    ImageDecoder.createSource(it, filePath)
                 bitmap = ImageDecoder.decodeBitmap(source)
             }
         }
