@@ -30,7 +30,7 @@ class ChangePasswordFragment : Fragment() {
         }
 
         changePasswordViewModel.errorEmptyToast.observe(viewLifecycleOwner) { hasError ->
-            if (hasError == true) {
+            if (hasError) {
                 Toast.makeText(requireContext(),
                     getString(R.string.fill_fields),
                     Toast.LENGTH_SHORT).show()
@@ -39,7 +39,7 @@ class ChangePasswordFragment : Fragment() {
         }
 
         changePasswordViewModel.errorNotMatchingToast.observe(viewLifecycleOwner, { hasError ->
-            if (hasError == true) {
+            if (hasError) {
                 Toast.makeText(requireContext(),
                     getString(R.string.wrong_password),
                     Toast.LENGTH_SHORT).show()
@@ -48,7 +48,7 @@ class ChangePasswordFragment : Fragment() {
         })
 
         changePasswordViewModel.passwordSet.observe(viewLifecycleOwner, { hasError ->
-            if (hasError == true) {
+            if (hasError) {
                 Toast.makeText(requireContext(),
                     getString(R.string.update_successful),
                     Toast.LENGTH_SHORT).show()

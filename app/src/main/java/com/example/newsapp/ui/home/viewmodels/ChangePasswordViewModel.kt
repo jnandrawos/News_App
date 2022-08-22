@@ -45,9 +45,9 @@ class ChangePasswordViewModel @Inject constructor(
         viewModelScope.launch {
             val user = repository.getUser(userEmail)
             if (user != null) {
-                if(oldPassword == null || newPassword == null || oldPassword == "" || newPassword == "" ){
+                if(!oldPassword.isNullOrEmpty() || !newPassword.isNullOrEmpty() ){
                     _errorEmptyToast.value = true
-                }else if(oldPassword != user.password){
+                }else if(!(oldPassword.equals(user.password))){
                     _errorNotMatchingToast.value = true
                 }else{
                     user.password = newPassword

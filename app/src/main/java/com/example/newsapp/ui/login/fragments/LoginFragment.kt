@@ -46,7 +46,7 @@ class LoginFragment : Fragment() {
         loginViewModel.autoLogin()
 
         loginViewModel.navigateToSignup.observe(viewLifecycleOwner, { hasFinished ->
-            if (hasFinished == true) {
+            if (hasFinished) {
 
                 goToSignUp()
                 loginViewModel.doneNavigatingSignup()
@@ -54,7 +54,7 @@ class LoginFragment : Fragment() {
         })
 
         loginViewModel.errorToast.observe(viewLifecycleOwner, { hasError ->
-            if (hasError == true) {
+            if (hasError) {
                 Toast.makeText(requireContext(),
                     getString(R.string.fill_fields),
                     Toast.LENGTH_SHORT).show()
@@ -63,7 +63,7 @@ class LoginFragment : Fragment() {
         })
 
         loginViewModel.errorToastEmail.observe(viewLifecycleOwner, { hasError ->
-            if (hasError == true) {
+            if (hasError) {
                 Toast.makeText(requireContext(),
                     getString(R.string.user_not_existing),
                     Toast.LENGTH_SHORT).show()
@@ -72,7 +72,7 @@ class LoginFragment : Fragment() {
         })
 
         loginViewModel.errorToastInvalidPassword.observe(viewLifecycleOwner, { hasError ->
-            if (hasError == true) {
+            if (hasError) {
                 Toast.makeText(requireContext(),
                     getString(R.string.check_password),
                     Toast.LENGTH_SHORT)
@@ -82,7 +82,7 @@ class LoginFragment : Fragment() {
         })
 
         loginViewModel.navigateToHome.observe(viewLifecycleOwner, { hasFinished ->
-            if (hasFinished == true) {
+            if (hasFinished) {
                 goToHomePage()
                 activity?.finish()
                 loginViewModel.doneNavigatingUserDetails()
@@ -90,7 +90,7 @@ class LoginFragment : Fragment() {
         })
 
         loginViewModel.errorToastEmailFormat.observe(viewLifecycleOwner, { hasError ->
-            if (hasError == true) {
+            if (hasError) {
                 Toast.makeText(requireContext(),
                     getString(R.string.wrong_email_format),
                     Toast.LENGTH_SHORT)
