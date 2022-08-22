@@ -40,6 +40,7 @@
     <string name="wrong_email_format">Email has wrong format</string>
     <string name="successful_signup">You have signed up successfully!</string>
     <string name="email_already_registered">Email already registered</string>
+    <string name="image_error">Failed to load image!</string>
 
     <string-array name="periods">
     <item>1 day</item>

@@ -143,6 +143,7 @@ class EditProfileFragment : Fragment() {
                 }
             true
         } catch (e: IOException) {
+            UtilityFunctions.showToast(requireActivity(), getString(R.string.image_error))
             UtilityFunctions.printLogs(getString(R.string.error), e.toString())
             false
         }
