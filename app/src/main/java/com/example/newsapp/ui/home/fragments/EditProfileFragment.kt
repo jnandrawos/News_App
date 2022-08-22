@@ -39,14 +39,12 @@ class EditProfileFragment : Fragment() {
     private lateinit var bitmap: Bitmap
     private val getImage =
         registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
-
-
-            if (result != null) {
+            result?.let {
                 filePath = result
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    if (!requireContext().contentResolver.equals(null)) {
+                    requireContext().contentResolver?.let {
                         val source =
-                            ImageDecoder.createSource(requireContext().contentResolver, filePath)
+                            ImageDecoder.createSource(it, filePath)
                         bitmap = ImageDecoder.decodeBitmap(source)
                     }
                 }
