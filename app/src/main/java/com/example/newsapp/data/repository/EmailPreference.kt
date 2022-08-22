@@ -9,7 +9,7 @@ import com.example.newsapp.util.Constants
 class EmailPreference(context: Context) {
 
     val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
-    val preference: SharedPreferences = EncryptedSharedPreferences.create(
+    private val preference = EncryptedSharedPreferences.create(
         Constants.shared_preferences_name,
         masterKeyAlias,
         context,
