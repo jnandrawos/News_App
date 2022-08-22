@@ -1,14 +1,12 @@
 package com.example.newsapp.ui.home.fragments
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +24,6 @@ import com.example.newsapp.databinding.FragmentEditProfileBinding
 import com.example.newsapp.ui.home.viewmodels.EditProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.io.IOException
 
 
 @AndroidEntryPoint
@@ -109,9 +106,14 @@ class EditProfileFragment : Fragment() {
                 try {
                     lifecycleScope.launch {
                         editProfileViewModel.getUserImagePath()?.let {
-                            Glide.with((requireActivity()))
-                                .load(it.toBitmap())
-                                .circleCrop().into(binding.civEditProfile)
+                            if (it.isEmpty())
+                                Glide.with(requireActivity())
+                                    .load(R.drawable.profile_image_placeholder).circleCrop()
+                                    .into(binding.civEditProfile)
+                            else
+                                Glide.with(requireActivity())
+                                    .load(it.toBitmap())
+                                    .circleCrop().into(binding.civEditProfile)
                         }
                     }
                 } catch (e: Exception) {

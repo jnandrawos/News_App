@@ -1,12 +1,11 @@
 package com.example.newsapp.ui.home.fragments
 
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
@@ -14,14 +13,11 @@ import com.bumptech.glide.Glide
 import com.example.newsapp.R
 import com.example.newsapp.common.UtilityFunctions
 import com.example.newsapp.common.toBitmap
-import com.example.newsapp.ui.login.activities.MainActivity
 import com.example.newsapp.databinding.FragmentMoreBinding
 import com.example.newsapp.ui.home.viewmodels.MoreViewModel
-import com.example.newsapp.util.InternalStoragePhoto
+import com.example.newsapp.ui.login.activities.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class MoreFragment : Fragment() {
@@ -80,9 +76,14 @@ class MoreFragment : Fragment() {
                 try {
                     lifecycleScope.launch {
                         moreViewModel.getUserImagePath()?.let {
-                            Glide.with((requireActivity()))
-                                .load(it.toBitmap())
-                                .circleCrop().into(binding.civProfile)
+                            if (it.isEmpty())
+                                Glide.with(requireActivity())
+                                    .load(R.drawable.profile_image_placeholder).circleCrop()
+                                    .into(binding.civProfile)
+                            else
+                                Glide.with(requireActivity())
+                                    .load(it.toBitmap())
+                                    .circleCrop().into(binding.civProfile)
                         }
                     }
                 } catch (e: Exception) {
