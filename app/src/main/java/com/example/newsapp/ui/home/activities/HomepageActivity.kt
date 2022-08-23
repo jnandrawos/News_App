@@ -25,8 +25,8 @@ class HomepageActivity : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         supportActionBar?.hide()
 
-
-        navController = (supportFragmentManager.findFragmentById(R.id.homeFragment) as NavHostFragment).navController
+        navController =
+            (supportFragmentManager.findFragmentById(R.id.homeFragment) as NavHostFragment).navController
 
         setupWithNavController(binding.bottomNavBarHome, navController)
 

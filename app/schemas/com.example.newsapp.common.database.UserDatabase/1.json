@@ -25,14 +25,6 @@
             "columnName": "name",
             "affinity": "TEXT",
             "notNull": true
-          },
-          {
-            "fieldPath": "imagePath",
-            "columnName": "image_path",
-            "affinity": "TEXT",
-            "notNull": true,
-            "defaultValue": "''"
-
           }
         ],
         "primaryKey": {

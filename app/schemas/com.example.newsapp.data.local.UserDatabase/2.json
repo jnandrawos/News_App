@@ -1,12 +1,12 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 1,
-    "identityHash": "387f2cff49550c551877dceb699c4542",
+    "version": 2,
+    "identityHash": "e2d73e58057e07a851c55ec4abf59e82",
     "entities": [
       {
         "tableName": "users_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`email` TEXT NOT NULL, `password` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`email`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`email` TEXT NOT NULL, `password` TEXT NOT NULL, `name` TEXT NOT NULL, `image_path` TEXT NOT NULL DEFAULT '', PRIMARY KEY(`email`))",
         "fields": [
           {
             "fieldPath": "email",
@@ -32,7 +32,6 @@
             "affinity": "TEXT",
             "notNull": true,
             "defaultValue": "''"
-
           }
         ],
         "primaryKey": {
@@ -48,7 +47,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '387f2cff49550c551877dceb699c4542')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e2d73e58057e07a851c55ec4abf59e82')"
     ]
   }
 }

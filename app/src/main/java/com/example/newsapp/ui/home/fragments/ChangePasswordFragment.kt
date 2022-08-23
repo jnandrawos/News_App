@@ -36,22 +36,17 @@ class ChangePasswordFragment : Fragment() {
             changePasswordViewModel.checkUserPassword(binding.etOldPassword.text.toString(),
                 binding.etNewPassword.text.toString())
         }
-
     }
 
-    private fun initObservers(){
-
+    private fun initObservers() {
         changePasswordViewModel.errorDisplay.observe(viewLifecycleOwner, { hasError ->
             if (hasError && !(changePasswordViewModel.errorMessage.value.isNullOrEmpty())) {
-
                 UtilityFunctions.showToast(requireContext(),
                     changePasswordViewModel.errorMessage.value.toString())
                 changePasswordViewModel.doneToast()
-                if(changePasswordViewModel.errorMessage.value.equals(getString(R.string.update_successful)))
+                if (changePasswordViewModel.errorMessage.value.equals(getString(R.string.update_successful)))
                     goToMore()
-
             }
-
         })
     }
 
