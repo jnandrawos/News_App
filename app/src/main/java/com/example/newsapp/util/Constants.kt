@@ -1,6 +1,7 @@
 package com.example.newsapp.util
 
 object Constants {
+    const val CAMERA_REQUEST_CODE = 100
     const val shared_preferences_name = "SharedPreference"
     const val email_preference_name = "EmailPreference"
     const val DATABASE_NAME = "User_Database"

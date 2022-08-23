@@ -1,17 +1,16 @@
 package com.example.newsapp.ui.home.viewmodels
 
 import android.app.Application
+import android.graphics.BitmapFactory
 import androidx.databinding.Observable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.newsapp.data.repository.EmailPreference
 import com.example.newsapp.data.repository.UserRepository
+import com.example.newsapp.util.InternalStoragePhoto
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -61,6 +60,10 @@ class EditProfileViewModel @Inject constructor(
         }
     }
 
+    suspend fun getUserImagePath() : String?{
+        return repository.getUser(userEmail)?.imagePath
+    }
+
     fun updateUser(fullName: String) {
         uiScope.launch {
             val user = repository.getUser(userEmail)
@@ -71,6 +74,21 @@ class EditProfileViewModel @Inject constructor(
                     user.name = fullName
                     repository.update(user)
                     _updateSuccessful.value = true
+                }
+            }
+        }
+    }
+
+    fun updateUserImage(filePath: String) {
+        uiScope.launch {
+            val user = repository.getUser(userEmail)
+            user?.let {
+                if (filePath.isNullOrEmpty()) {
+                    _errorToastInvalidName.value = true
+                } else {
+                    user.imagePath = filePath
+                    repository.update(user)
+                    showImage()
                 }
             }
         }
