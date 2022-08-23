@@ -21,13 +21,16 @@ class AboutUsFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentAboutUsBinding.inflate(layoutInflater)
-
-        webViewSetup()
         return binding.root
     }
 
-    private fun webViewSetup() {
-        binding.wvAboutUs.webViewClient = object : WebViewClient(){
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupView()
+    }
+
+    private fun setupView() {
+        binding.wvAboutUs.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 binding.pbLoadUrl.visibility = View.INVISIBLE

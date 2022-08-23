@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp.ui.home.viewmodels.NewsViewModel
 import com.example.newsapp.R
+import com.example.newsapp.common.UtilityFunctions
 import com.example.newsapp.ui.home.adapter.NewsAdapter
 import com.example.newsapp.databinding.FragmentNewsBinding
 import com.example.newsapp.data.repository.Resource
@@ -31,14 +32,20 @@ class NewsFragment : Fragment(), AdapterView.OnItemSelectedListener {
         binding = FragmentNewsBinding.inflate(layoutInflater, container, false)
 
         setupRecyclerView()
+        implementListeners()
+        initObservers()
 
-        newsAdapter.setOnItemClickListener {article ->
+        return binding.root
+    }
+
+    private fun implementListeners() {
+        newsAdapter.setOnItemClickListener { article ->
             article.url?.let { goToArticle(it) }
         }
-
         binding.periodSpinner.onItemSelectedListener = this
+    }
 
-
+    private fun initObservers() {
         newsViewModel.mostViewedNews.observe(viewLifecycleOwner, { response ->
             when (response) {
                 is Resource.Success -> {
@@ -47,30 +54,22 @@ class NewsFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         newsAdapter.differ.submitList(newsResponse.results)
                     }
                 }
-
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let { message ->
-                        Log.e(getString(R.string.fetching_error), message)
+                        UtilityFunctions.printLogs(getString(R.string.fetching_error), message)
                     }
                 }
-
                 is Resource.Loading ->
                     showProgressBar()
             }
-
         })
-
-
-        return binding.root
     }
 
     private fun hideProgressBar() {
-
         binding.pbLoading.visibility = View.INVISIBLE
         binding.rvNews.visibility = View.VISIBLE
         binding.tvNoEntries.visibility = View.INVISIBLE
-
     }
 
     private fun showProgressBar() {
@@ -104,7 +103,7 @@ class NewsFragment : Fragment(), AdapterView.OnItemSelectedListener {
             2 -> {
                 newsViewModel.newsPeriod = 30
             }
-            else ->{
+            else -> {
                 newsViewModel.newsPeriod = 1
             }
         }
@@ -113,5 +112,4 @@ class NewsFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
     }
-
 }

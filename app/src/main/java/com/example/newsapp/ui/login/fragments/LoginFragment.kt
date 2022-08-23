@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
-import com.example.newsapp.ui.home.activities.Homepage
+import com.example.newsapp.ui.home.activities.HomepageActivity
 import com.example.newsapp.R
 import com.example.newsapp.common.UtilityFunctions
 import com.example.newsapp.databinding.FragmentLoginBinding
@@ -20,49 +20,51 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private val loginViewModel: LoginViewModel by viewModels()
+    private lateinit var binding: FragmentLoginBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val binding: FragmentLoginBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_login, container, false
         )
 
         binding.myLoginViewModel = loginViewModel
-
         binding.lifecycleOwner = this
+        implementListeners()
+        loginViewModel.autoLogin()
+        initObservers()
 
+        return binding.root
+    }
+
+    private fun implementListeners() {
         binding.signupTv.setOnClickListener {
             loginViewModel.signUP()
         }
-
         binding.loginButton.setOnClickListener {
             loginViewModel.loginButton()
         }
+    }
 
-
-        loginViewModel.autoLogin()
-
+    private fun initObservers() {
         loginViewModel.errorDisplay.observe(viewLifecycleOwner, { hasError ->
-            if(hasError && !(loginViewModel.errorMessage.value.isNullOrEmpty())){
-                UtilityFunctions.showToast(requireContext(),loginViewModel.errorMessage.value.toString())
+            if (hasError && !(loginViewModel.errorMessage.value.isNullOrEmpty())) {
+                UtilityFunctions.showToast(requireContext(),
+                    loginViewModel.errorMessage.value.toString())
                 loginViewModel.doneToast()
             }
 
         })
 
-
         loginViewModel.navigateToSignup.observe(viewLifecycleOwner, { hasFinished ->
             if (hasFinished) {
-
                 goToSignUp()
                 loginViewModel.doneNavigatingSignup()
             }
         })
-
-
 
         loginViewModel.navigateToHome.observe(viewLifecycleOwner, { hasFinished ->
             if (hasFinished) {
@@ -71,23 +73,15 @@ class LoginFragment : Fragment() {
                 loginViewModel.doneNavigatingUserDetails()
             }
         })
-
-
-        return binding.root
     }
 
-
     private fun goToSignUp() {
-
         val action =
             LoginFragmentDirections.actionLoginFragmentToSignupFragment()
         NavHostFragment.findNavController(this).navigate(action)
-
     }
 
     private fun goToHomePage() {
-        startActivity(Intent(context, Homepage::class.java))
+        startActivity(Intent(context, HomepageActivity::class.java))
     }
-
-
 }

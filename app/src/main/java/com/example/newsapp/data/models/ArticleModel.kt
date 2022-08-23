@@ -46,5 +46,4 @@ data class ArticleModel(
     var media: ArrayList<MediaModel>,
     @SerializedName("eta_id")
     var etaId: Int? = null,
-
     )

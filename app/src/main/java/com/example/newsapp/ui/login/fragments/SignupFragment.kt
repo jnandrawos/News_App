@@ -18,24 +18,32 @@ import dagger.hilt.android.AndroidEntryPoint
 class SignupFragment : Fragment() {
 
     private val signupViewModel: SignupViewModel by viewModels()
+    private lateinit var binding: FragmentSignupBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val binding: FragmentSignupBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_signup, container, false
         )
-
         binding.myViewModel = signupViewModel
         binding.lifecycleOwner = this
 
+        implementListeners()
+        initObservers()
+
+        return binding.root
+    }
+
+    private fun implementListeners() {
         binding.signupButton.setOnClickListener {
             signupViewModel.submitButton()
         }
+    }
 
-
+    private fun initObservers() {
         signupViewModel.navigateTo.observe(viewLifecycleOwner, { hasFinished ->
             if (hasFinished) {
                 goToLogin()
@@ -45,28 +53,23 @@ class SignupFragment : Fragment() {
 
         signupViewModel.successfulSignUp.observe(viewLifecycleOwner, { hasFinished ->
             if (hasFinished) {
-                UtilityFunctions.showToast(requireContext(),getString(R.string.successful_signup))
+                UtilityFunctions.showToast(requireContext(), getString(R.string.successful_signup))
                 signupViewModel.doneSuccessfulSignUp()
             }
         })
 
         signupViewModel.errorDisplay.observe(viewLifecycleOwner, { hasError ->
             if (hasError && !(signupViewModel.errorMessage.value.isNullOrEmpty())) {
-                UtilityFunctions.showToast(requireContext(),signupViewModel.errorMessage.value.toString())
+                UtilityFunctions.showToast(requireContext(),
+                    signupViewModel.errorMessage.value.toString())
                 signupViewModel.doneToast()
-
             }
-
         })
-
-        return binding.root
     }
 
     private fun goToLogin() {
         val action =
             SignupFragmentDirections.actionSignupFragmentToLoginFragment()
         NavHostFragment.findNavController(this).navigate(action)
-
     }
-
 }
