@@ -6,22 +6,17 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.newsapp.R
 
-@Database(entities = [UserEntity::class],version = 1)
-abstract class UserDatabase: RoomDatabase() {
+@Database(entities = [UserEntity::class], version = 1)
+abstract class UserDatabase : RoomDatabase() {
 
-    abstract fun userDao() : UserDao
+    abstract fun userDao(): UserDao
 
     companion object {
-
         @Volatile
         private var INSTANCE: UserDatabase? = null
-
-
         fun getInstance(context: Context): UserDatabase {
             synchronized(this) {
-
                 var instance = INSTANCE
-
                 if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
@@ -30,12 +25,10 @@ abstract class UserDatabase: RoomDatabase() {
                     )
                         .fallbackToDestructiveMigration()
                         .build()
-
                     INSTANCE = instance
                 }
                 return instance
             }
         }
     }
-
 }

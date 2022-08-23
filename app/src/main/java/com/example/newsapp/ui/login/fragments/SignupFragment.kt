@@ -41,10 +41,9 @@ class SignupFragment : Fragment() {
         binding.signupButton.setOnClickListener {
             signupViewModel.submitButton()
         }
-
     }
 
-    private fun initObservers(){
+    private fun initObservers() {
         signupViewModel.navigateTo.observe(viewLifecycleOwner, { hasFinished ->
             if (hasFinished) {
                 goToLogin()
@@ -54,27 +53,23 @@ class SignupFragment : Fragment() {
 
         signupViewModel.successfulSignUp.observe(viewLifecycleOwner, { hasFinished ->
             if (hasFinished) {
-                UtilityFunctions.showToast(requireContext(),getString(R.string.successful_signup))
+                UtilityFunctions.showToast(requireContext(), getString(R.string.successful_signup))
                 signupViewModel.doneSuccessfulSignUp()
             }
         })
 
         signupViewModel.errorDisplay.observe(viewLifecycleOwner, { hasError ->
             if (hasError && !(signupViewModel.errorMessage.value.isNullOrEmpty())) {
-                UtilityFunctions.showToast(requireContext(),signupViewModel.errorMessage.value.toString())
+                UtilityFunctions.showToast(requireContext(),
+                    signupViewModel.errorMessage.value.toString())
                 signupViewModel.doneToast()
-
             }
-
         })
-
     }
 
     private fun goToLogin() {
         val action =
             SignupFragmentDirections.actionSignupFragmentToLoginFragment()
         NavHostFragment.findNavController(this).navigate(action)
-
     }
-
 }

@@ -27,7 +27,7 @@ class AboutUsFragment : Fragment() {
     }
 
     private fun setupView() {
-        binding.wvAboutUs.webViewClient = object : WebViewClient(){
+        binding.wvAboutUs.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 binding.pbLoadUrl.visibility = View.INVISIBLE
