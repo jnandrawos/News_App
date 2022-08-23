@@ -71,7 +71,8 @@ class SignupViewModel @Inject constructor(
                     insert(UserEntity(
                         inputEmail.value.toString(),
                         inputPassword.value.toString(),
-                        inputName.value.toString()
+                        inputName.value.toString(),
+                        ""
                     ))
                     inputEmail.value = null
                     inputPassword.value = null
