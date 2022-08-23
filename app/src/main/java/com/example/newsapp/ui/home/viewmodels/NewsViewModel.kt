@@ -9,6 +9,7 @@ import androidx.databinding.Observable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.newsapp.common.UtilityFunctions
 import com.example.newsapp.util.NewsApplication
 import com.example.newsapp.data.models.NewsResponseModel
 import com.example.newsapp.data.repository.NewsRepository
@@ -32,9 +33,8 @@ class NewsViewModel @Inject constructor(
         getMostViewedNews()
     }
 
-
     fun getMostViewedNews() = viewModelScope.launch {
-        if(hasInternetConnection()) {
+        if (UtilityFunctions.hasInternetConnection(getApplication<NewsApplication>())) {
             mostViewedNews.postValue(Resource.Loading())
             val response = repository.getMostViewedNews(newsPeriod)
             mostViewedNews.postValue(handleMostViewedNewsResponse(response))
@@ -49,36 +49,6 @@ class NewsViewModel @Inject constructor(
         }
         return Resource.Error(response.message(), null)
     }
-
-
-
-    private fun hasInternetConnection(): Boolean {
-        val connectivityManager = getApplication<NewsApplication>().getSystemService(
-            Context.CONNECTIVITY_SERVICE
-        ) as ConnectivityManager
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            val activeNetwork = connectivityManager.activeNetwork ?: return false
-            val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork)?: return false
-            return when{
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-                else -> false
-            }
-        }else{
-            connectivityManager.activeNetworkInfo?.run{
-                return when(type){
-                    ConnectivityManager.TYPE_WIFI -> true
-                    ConnectivityManager.TYPE_MOBILE -> true
-                    ConnectivityManager.TYPE_ETHERNET -> true
-                    else -> false
-                }
-            }
-            return false
-        }
-    }
-
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
     }

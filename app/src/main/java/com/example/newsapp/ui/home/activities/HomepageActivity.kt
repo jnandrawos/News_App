@@ -12,7 +12,7 @@ import com.example.newsapp.databinding.ActivityHomepageBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class Homepage : AppCompatActivity() {
+class HomepageActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
     private lateinit var binding: ActivityHomepageBinding
@@ -25,8 +25,8 @@ class Homepage : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         supportActionBar?.hide()
 
-
-        navController = (supportFragmentManager.findFragmentById(R.id.homeFragment) as NavHostFragment).navController
+        navController =
+            (supportFragmentManager.findFragmentById(R.id.homeFragment) as NavHostFragment).navController
 
         setupWithNavController(binding.bottomNavBarHome, navController)
 
