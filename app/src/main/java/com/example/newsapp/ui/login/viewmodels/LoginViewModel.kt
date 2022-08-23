@@ -56,7 +56,7 @@ class LoginViewModel @Inject constructor(
         } else {
             viewModelScope.launch {
                 val emails = repository.getUser(inputEmail.value.toString())
-                if (emails != null) {
+                emails?.let {
                     if (emails.password.equals(inputPassword.value)) {
                         EmailPreference(context).setLoggedInEmail(emails.email)
                         inputEmail.value = null
@@ -66,7 +66,7 @@ class LoginViewModel @Inject constructor(
                         errorMessage.value = context.resources.getString(R.string.check_password)
                         _errorDisplay.value = true
                     }
-                } else {
+                } ?: run {
                     errorMessage.value = context.resources.getString(R.string.user_not_existing)
                     _errorDisplay.value = true
                 }
