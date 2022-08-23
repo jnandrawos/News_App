@@ -1,13 +1,17 @@
 package com.example.newsapp.ui.home.viewmodels
 
 import android.app.Application
+import android.graphics.BitmapFactory
 import androidx.databinding.Observable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.newsapp.data.repository.EmailPreference
 import com.example.newsapp.data.repository.UserRepository
+import com.example.newsapp.util.InternalStoragePhoto
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,7 +35,6 @@ class MoreViewModel @Inject constructor(
         get() = _navigateToLogin
 
 
-
     fun showImage() {
         _showImage.value = true
     }
@@ -49,11 +52,13 @@ class MoreViewModel @Inject constructor(
         _navigateToLogin.value = true
     }
 
-    fun doneNavigateToLogin(){
-        _navigateToLogin.value=false
+    fun doneNavigateToLogin() {
+        _navigateToLogin.value = false
     }
 
-
+    suspend fun getUserImagePath() : String?{
+        return repository.getUser(userEmail)?.imagePath
+    }
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
     }

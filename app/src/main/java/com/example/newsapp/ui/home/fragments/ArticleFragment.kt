@@ -31,7 +31,7 @@ class ArticleFragment : Fragment() {
     }
 
     private fun setupView() {
-        binding.wvArticle.webViewClient = object: WebViewClient(){
+        binding.wvArticle.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 binding.pbLoadUrl.visibility = View.INVISIBLE
@@ -42,9 +42,5 @@ class ArticleFragment : Fragment() {
         binding.wvArticle.apply {
             loadUrl(articleURL)
         }
-
-
-
     }
-
 }

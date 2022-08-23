@@ -14,7 +14,6 @@ import com.example.newsapp.data.models.ArticleModel
 class NewsAdapter :
     RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
-
     inner class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private val differCallBack = object : DiffUtil.ItemCallback<ArticleModel>() {
@@ -26,7 +25,6 @@ class NewsAdapter :
             return oldItem == newItem
         }
     }
-
 
     val differ = AsyncListDiffer(this, differCallBack)
 
@@ -40,10 +38,11 @@ class NewsAdapter :
         val article = differ.currentList[position]
         holder.itemView.apply {
             val binding: ArticleItemBinding = ArticleItemBinding.bind(holder.itemView)
-            if (!article.media.isNullOrEmpty()) {
-                Glide.with(holder.itemView).load(article.media[0].mediaMetadata[0].url)
+
+            article.media.firstOrNull()?.mediaMetadata?.firstOrNull()?.let{
+                Glide.with(holder.itemView).load(it.url)
                     .into(binding.ivArticleImage)
-            } else {
+            } ?: run {
                 binding.ivArticleImage.visibility = View.GONE
             }
             binding.tvSource.text = article.source
@@ -51,9 +50,9 @@ class NewsAdapter :
             binding.tvDescription.text = article.abstract
             binding.tvPublishedAt.text = article.publishedDate
             holder.itemView.setOnClickListener {
-                    onItemClickListener?.let {
-                        it(article)
-                    }
+                onItemClickListener?.let {
+                    it(article)
+                }
             }
         }
     }
@@ -68,5 +67,4 @@ class NewsAdapter :
     fun setOnItemClickListener(listener: (ArticleModel) -> Unit) {
         onItemClickListener = listener
     }
-
 }

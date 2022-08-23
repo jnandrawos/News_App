@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
-import com.example.newsapp.ui.home.activities.Homepage
+import com.example.newsapp.ui.home.activities.HomepageActivity
 import com.example.newsapp.R
 import com.example.newsapp.common.UtilityFunctions
 import com.example.newsapp.databinding.FragmentLoginBinding
@@ -44,32 +44,27 @@ class LoginFragment : Fragment() {
         binding.signupTv.setOnClickListener {
             loginViewModel.signUP()
         }
-
         binding.loginButton.setOnClickListener {
             loginViewModel.loginButton()
         }
-
     }
 
-    private fun initObservers(){
+    private fun initObservers() {
         loginViewModel.errorDisplay.observe(viewLifecycleOwner, { hasError ->
-            if(hasError && !(loginViewModel.errorMessage.value.isNullOrEmpty())){
-                UtilityFunctions.showToast(requireContext(),loginViewModel.errorMessage.value.toString())
+            if (hasError && !(loginViewModel.errorMessage.value.isNullOrEmpty())) {
+                UtilityFunctions.showToast(requireContext(),
+                    loginViewModel.errorMessage.value.toString())
                 loginViewModel.doneToast()
             }
 
         })
 
-
         loginViewModel.navigateToSignup.observe(viewLifecycleOwner, { hasFinished ->
             if (hasFinished) {
-
                 goToSignUp()
                 loginViewModel.doneNavigatingSignup()
             }
         })
-
-
 
         loginViewModel.navigateToHome.observe(viewLifecycleOwner, { hasFinished ->
             if (hasFinished) {
@@ -78,21 +73,15 @@ class LoginFragment : Fragment() {
                 loginViewModel.doneNavigatingUserDetails()
             }
         })
-
     }
 
-
     private fun goToSignUp() {
-
         val action =
             LoginFragmentDirections.actionLoginFragmentToSignupFragment()
         NavHostFragment.findNavController(this).navigate(action)
-
     }
 
     private fun goToHomePage() {
-        startActivity(Intent(context, Homepage::class.java))
+        startActivity(Intent(context, HomepageActivity::class.java))
     }
-
-
 }

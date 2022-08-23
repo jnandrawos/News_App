@@ -9,8 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.example.newsapp.R
 import com.example.newsapp.common.UtilityFunctions
-import com.example.newsapp.ui.home.viewmodels.ChangePasswordViewModel
 import com.example.newsapp.databinding.FragmentChangePasswordBinding
+import com.example.newsapp.ui.home.viewmodels.ChangePasswordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,22 +39,17 @@ class ChangePasswordFragment : Fragment() {
             changePasswordViewModel.checkUserPassword(binding.etOldPassword.text.toString(),
                 binding.etNewPassword.text.toString())
         }
-
     }
 
-    private fun initObservers(){
-
+    private fun initObservers() {
         changePasswordViewModel.errorDisplay.observe(viewLifecycleOwner, { hasError ->
             if (hasError && !(changePasswordViewModel.errorMessage.value.isNullOrEmpty())) {
-
                 UtilityFunctions.showToast(requireContext(),
                     changePasswordViewModel.errorMessage.value.toString())
                 changePasswordViewModel.doneToast()
-                if(changePasswordViewModel.errorMessage.value.equals(getString(R.string.update_successful)))
+                if (changePasswordViewModel.errorMessage.value.equals(getString(R.string.update_successful)))
                     goToMore()
-
             }
-
         })
     }
 

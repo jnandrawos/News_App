@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsApp">
-        <activity android:name="com.example.newsapp.ui.home.activities.Homepage" />
+        <activity android:name="com.example.newsapp.ui.home.activities.HomepageActivity" />
         <activity
             android:name="com.example.newsapp.ui.login.activities.MainActivity"
             android:screenOrientation="portrait"
