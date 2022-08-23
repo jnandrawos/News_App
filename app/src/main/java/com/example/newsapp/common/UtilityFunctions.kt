@@ -4,7 +4,9 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
+import com.example.newsapp.BuildConfig
 import com.example.newsapp.util.NewsApplication
 
 class UtilityFunctions {
@@ -43,5 +45,9 @@ class UtilityFunctions {
             }
         }
 
+        fun printLogs(tag: String, message: String) {
+            if (BuildConfig.DEBUG)
+                Log.e(tag, message)
+        }
     }
 }
