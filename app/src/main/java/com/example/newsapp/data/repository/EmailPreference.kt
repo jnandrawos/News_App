@@ -16,7 +16,6 @@ class EmailPreference(context: Context) {
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM)
 
-
     fun getLoggedInEmail(): String? {
         return preference.getString(Constants.email_preference_name, null)
     }

@@ -33,9 +33,8 @@ class NewsViewModel @Inject constructor(
         getMostViewedNews()
     }
 
-
     fun getMostViewedNews() = viewModelScope.launch {
-        if(UtilityFunctions.hasInternetConnection(getApplication<NewsApplication>())) {
+        if (UtilityFunctions.hasInternetConnection(getApplication<NewsApplication>())) {
             mostViewedNews.postValue(Resource.Loading())
             val response = repository.getMostViewedNews(newsPeriod)
             mostViewedNews.postValue(handleMostViewedNewsResponse(response))
@@ -50,7 +49,6 @@ class NewsViewModel @Inject constructor(
         }
         return Resource.Error(response.message(), null)
     }
-
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
     }
