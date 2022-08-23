@@ -12,4 +12,6 @@ data class UserEntity(
     var password: String,
     @ColumnInfo(name = "name")
     var name: String,
+    @ColumnInfo(name = "image_path", defaultValue = "")
+    var imagePath: String
 )

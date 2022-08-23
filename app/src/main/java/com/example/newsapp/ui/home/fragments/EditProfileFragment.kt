@@ -19,11 +19,12 @@ import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import com.example.newsapp.R
 import com.example.newsapp.common.UtilityFunctions
+import com.example.newsapp.common.toBase64
+import com.example.newsapp.common.toBitmap
 import com.example.newsapp.databinding.FragmentEditProfileBinding
 import com.example.newsapp.ui.home.viewmodels.EditProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.io.IOException
 
 
 @AndroidEntryPoint
@@ -44,7 +45,8 @@ class EditProfileFragment : Fragment() {
                         bitmap = ImageDecoder.decodeBitmap(source)
                     }
                 }
-                saveImageToStorage(editProfileViewModel.getUserEmail(), bitmap)
+                editProfileViewModel.updateUserImage(filePath.toBitmap(requireActivity())
+                    .toBase64())
             }
         }
 
@@ -69,7 +71,19 @@ class EditProfileFragment : Fragment() {
 
     private fun implementListeners() {
         binding.civEditProfile.setOnClickListener {
-            getImage.launch("image/")
+            isBottomSheetUp = true
+            bottomSheet.apply {
+                setOnCameraClickListener {
+                    if (setupPermissions())
+                        getImageFromCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
+                    else
+                        makeRequest()
+                }
+                setOnStorageClickListener {
+                    getImageFromStorage.launch("image/")
+
+                }
+            }.show(parentFragmentManager, getString(R.string.bottom_sheet_tag))
         }
 
         binding.updateButton.setOnClickListener {
@@ -102,15 +116,21 @@ class EditProfileFragment : Fragment() {
 
         editProfileViewModel.showImage.observe(viewLifecycleOwner, { hasSaved ->
             if (hasSaved) {
-
-                viewLifecycleOwner.lifecycleScope.launch {
-                    val listOfImages = editProfileViewModel.loadImageFromStorage()
-                    for (im in listOfImages) {
-                        if (im.name.contains(editProfileViewModel.getUserEmail())) {
-                            Glide.with(requireContext()).load(im.bitmap).circleCrop()
-                                .into(binding.civEditProfile)
+                try {
+                    lifecycleScope.launch {
+                        editProfileViewModel.getUserImagePath()?.let {
+                            if (it.isEmpty())
+                                Glide.with(requireActivity())
+                                    .load(R.drawable.profile_image_placeholder).circleCrop()
+                                    .into(binding.civEditProfile)
+                            else
+                                Glide.with(requireActivity())
+                                    .load(it.toBitmap())
+                                    .circleCrop().into(binding.civEditProfile)
                         }
                     }
+                } catch (e: Exception) {
+                    UtilityFunctions.showToast(requireActivity(), getString(R.string.image_error))
                 }
                 editProfileViewModel.doneSavingImage()
             }
@@ -129,24 +149,6 @@ class EditProfileFragment : Fragment() {
             return result == PackageManager.PERMISSION_GRANTED
         }
         return false
-    }
-
-
-    private fun saveImageToStorage(fileName: String, bitmap: Bitmap): Boolean {
-        return try {
-            requireContext().openFileOutput("$fileName.jpg", Context.MODE_PRIVATE)
-                .use { outputStream ->
-                    editProfileViewModel.showImage()
-                    if (bitmap.compress(Bitmap.CompressFormat.JPEG, 95, outputStream).not()) {
-                        throw IOException(getString(R.string.bitmap_error))
-                    }
-                }
-            true
-        } catch (e: IOException) {
-            UtilityFunctions.showToast(requireActivity(), getString(R.string.image_error))
-            UtilityFunctions.printLogs(getString(R.string.error), e.toString())
-            false
-        }
     }
 
 }

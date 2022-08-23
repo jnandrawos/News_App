@@ -60,6 +60,10 @@ class EditProfileViewModel @Inject constructor(
         }
     }
 
+    suspend fun getUserImagePath() : String?{
+        return repository.getUser(userEmail)?.imagePath
+    }
+
     fun updateUser(fullName: String) {
         uiScope.launch {
             val user = repository.getUser(userEmail)
@@ -70,6 +74,21 @@ class EditProfileViewModel @Inject constructor(
                     _updateSuccessful.value = true
                 } else {
                     _errorToastInvalidName.value = true
+                }
+            }
+        }
+    }
+
+    fun updateUserImage(filePath: String) {
+        uiScope.launch {
+            val user = repository.getUser(userEmail)
+            user?.let {
+                if (filePath.isNullOrEmpty()) {
+                    _errorToastInvalidName.value = true
+                } else {
+                    user.imagePath = filePath
+                    repository.update(user)
+                    showImage()
                 }
             }
         }
@@ -93,19 +112,6 @@ class EditProfileViewModel @Inject constructor(
 
     fun doneUpdateSuccessful() {
         _updateSuccessful.value = false
-    }
-
-    suspend fun loadImageFromStorage(): List<InternalStoragePhoto> {
-        return withContext(Dispatchers.IO) {
-            val files = context.filesDir.listFiles()
-            files.filter {
-                it.canRead() && it.name.endsWith(".jpg")
-            }.map {
-                val bytes = it.readBytes()
-                val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                InternalStoragePhoto(it.name, bitmap)
-            }
-        }
     }
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
