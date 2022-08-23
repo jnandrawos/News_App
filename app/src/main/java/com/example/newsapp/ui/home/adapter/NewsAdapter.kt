@@ -38,10 +38,11 @@ class NewsAdapter :
         val article = differ.currentList[position]
         holder.itemView.apply {
             val binding: ArticleItemBinding = ArticleItemBinding.bind(holder.itemView)
-            if (!article.media.isNullOrEmpty() || !article.media[0].mediaMetadata.isNullOrEmpty()) {
-                Glide.with(holder.itemView).load(article.media[0].mediaMetadata[0].url)
+
+            article.media.firstOrNull()?.mediaMetadata?.firstOrNull()?.let{
+                Glide.with(holder.itemView).load(it.url)
                     .into(binding.ivArticleImage)
-            } else {
+            } ?: run {
                 binding.ivArticleImage.visibility = View.GONE
             }
             binding.tvSource.text = article.source
